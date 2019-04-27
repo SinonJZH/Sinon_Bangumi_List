@@ -2,7 +2,7 @@
 /*
 Plugin Name: Sinon的追番列表
 Plugin URI: https://sinon.top/sinon-bangumi-list/
-Description: Sinon的追番列表
+Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具”菜单中配置追番列表。
 Version: 0.1
 Author: Sinon
 Author URI: https://sinon.top/
