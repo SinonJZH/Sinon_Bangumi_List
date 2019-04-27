@@ -3,7 +3,7 @@
 Plugin Name: Sinon的追番列表
 Plugin URI: https://sinon.top/sinon-bangumi-list/
 Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具”菜单中配置追番列表。
-Version: 0.1
+Version: 1.0
 Author: Sinon
 Author URI: https://sinon.top/
 */
@@ -15,7 +15,81 @@ global $saved_bangumi;
 function create_bangumi_list()
 {
     echo '<link rel="stylesheet" type="text/css" href="/wp-content/plugins/Sinon_Bangumi_List/css/style.css">';
-    //TODO 生成追番列表
+    $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
+    $status_0 = 0;
+    $status_1 = 0;
+    $status_2 = 0;
+    foreach ($saved_bangumi as $a) {
+        if ($a['status'] == 0) {
+            $index[0][$status_0++] = $a['id'];
+        } elseif ($a['status'] == 1) {
+            $index[1][$status_1++] = $a['id'];
+        } elseif ($a['status'] == 2) {
+            $index[2][$status_2++] = $a['id'];
+        }
+    }
+    echo '<h2>正在追番(' . $status_1 . ')</h2>';
+    for ($i = 0; $i < $status_1; $i++) {
+        $id = $index[1][$i];
+        echo '<a href="' . $saved_bangumi[$id]['url'] . '" target="_blank" class="bangumItem" title="' . $saved_bangumi[$id]['title'] . '">' .
+            '<img src="' . $saved_bangumi[$id]['img'] . '">' .
+            '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
+            '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
+            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>.' .
+            '<div class="jinduBG"><div class="jinduText">进度:' . $saved_bangumi[$id]['progress'] . '/' . $saved_bangumi[$id]['count'] . '</div><div class="jinduFG" style="width:' . (string)((double)$saved_bangumi[$id]['progress'] / $saved_bangumi[$id]['count'] * 100) . '%;"></div></div></div></a>';
+    }
+    if ($status_1 % 2) {
+        echo <<<EOT
+        <a href="http://bgm.tv/subject/0" target="_blank" class="bangumItem">
+        <img src="https://sinon.top/wp-content/uploads/2018/12/JJ_V1WEUNXEPDXMKLU9S.gif">
+        <div class="textBox">占位<br>
+          <br>
+          <br>
+          <div class="jinduBG">
+            <div class="jinduText"></div>
+            <div class="jinduFG" style="width:0%;">
+            </div>
+          </div>
+        </div>
+      </a>
+EOT;
+    }
+    echo '<h2>追完番剧(' . $status_2 . ')</h2>';
+    for ($i = 0; $i < $status_2; $i++) {
+        $id = $index[2][$i];
+        echo '<a href="' . $saved_bangumi[$id]['url'] . '" target="_blank" class="bangumItem" title="' . $saved_bangumi[$id]['title'] . '">' .
+            '<img src="' . $saved_bangumi[$id]['img'] . '">' .
+            '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
+            '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
+            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>' .
+            '<div class="jinduBG"><div class="jinduText">已追完</div><div class="jinduFG" style="width:100%;"></div></div></div></a>';
+    }
+    if ($status_2 % 2) {
+        echo <<<EOT
+        <a href="http://bgm.tv/subject/0" target="_blank" class="bangumItem">
+        <img src="https://sinon.top/wp-content/uploads/2018/12/JJ_V1WEUNXEPDXMKLU9S.gif">
+        <div class="textBox">占位<br>
+          <br>
+          <br>
+          <div class="jinduBG">
+            <div class="jinduText"></div>
+            <div class="jinduFG" style="width:0%;">
+            </div>
+          </div>
+        </div>
+      </a>
+EOT;
+    }
+    echo '<h2>待追番剧(' . $status_0 . ')</h2>';
+    for ($i = 0; $i < $status_0; $i++) {
+        $id = $index[0][$i];
+        echo '<a href="' . $saved_bangumi[$id]['url'] . '" target="_blank" class="bangumItem" title="' . $saved_bangumi[$id]['title'] . '">' .
+            '<img src="' . $saved_bangumi[$id]['img'] . '">' .
+            '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
+            '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
+            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>.' .
+            '<div class="jinduBG"><div class="jinduText">进度:0/' . $saved_bangumi[$id]['count'] . '</div><div class="jinduFG" style="width:0%;"></div></div></div></a>';
+    }
 }
 
 add_shortcode("bangumi", 'create_bangumi_list');
@@ -71,9 +145,9 @@ function generate_bangumi_item($id, $status, $progress = 0)
         '首播日期：' . $date[0] . '年' . $date[1] . '月' . $date[2] . '日<br>';
     if ($status === 0) {
         echo '<div class="jinduBG"><div class="jinduText">进度:0/' . $bg_json['eps_count'] . '</div><div class="jinduFG" style="width:0%;"></div></div></div></a>';
-    } elseif ($status === 1) {
-        echo '<div class="jinduBG"><div class="jinduText">已追完</div><div class="jinduFG" style="width:100%;"></div></div></div></a>';
     } elseif ($status === 2) {
+        echo '<div class="jinduBG"><div class="jinduText">已追完</div><div class="jinduFG" style="width:100%;"></div></div></div></a>';
+    } elseif ($status === 1) {
         echo '<div class="jinduBG"><div class="jinduText">进度:' . $progress . '/' . $bg_json['eps_count'] . '</div><div class="jinduFG" style="width:' . (string)((double)$progress / $bg_json['eps_count'] * 100) . '%;"></div></div></div></a>';
     }
 }
@@ -155,7 +229,7 @@ function generate_confirm_page()
         '日文名：<input type="text" name="name" value="' . $add['name'] . '"style="width:50%"><br>' .
         '放送日期：<input type="text" name="date" value="' . $add['date'] . '"style="width:50%"><br>' .
         '总话数：<input type="text" name="count" value="' . $add['count'] . '"style="width:50%"><br>' .
-        '简介：<textarea style="width:50%;height:300px; name="title">' . $add['title'] . '</textarea><br>' .
+        '简介：<textarea style="width:50%;height:300px;" name="title">' . $add['title'] . '</textarea><br>' .
         '<input type="submit" value="确认添加" class="button button-primary"></form>' .
         '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃添加" class="button action">';
 }
@@ -165,14 +239,14 @@ function update_bangumi_option()
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $id = (int)$_POST['bangumi_id'];
     $change = $saved_bangumi[$id];
-    $change['status']=(int)$_POST['bg_status'];
+    $change['status'] = (int)$_POST['bg_status'];
     if ($_POST['progress'] == NULL) {
         $change['progress'] = 0;
     } else {
-            $change['progress'] = $_POST['progress'];
-        }
-    if($_POST['count']!=NULL){
-        $change['count']=$_POST['count'];
+        $change['progress'] = $_POST['progress'];
+    }
+    if ($_POST['count'] != NULL) {
+        $change['count'] = $_POST['count'];
     }
     $saved_bangumi[$id] = $change;
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
@@ -187,13 +261,13 @@ function add_bangumi_item()
     $add['img'] = $_POST['img'];
     $add['url'] = $_POST['url'];
     $add['name_cn'] = $_POST['name_cn'];
-    $add['name']=$_POST['name'];
-    $add['date']=$_POST['date'];
-    $add['count']=$_POST['count'];
-    $add['title']=$_POST['title'];
-    $add['status']=0;
-    $add['progress']=0;
-    $saved_bangumi[$id]=$add;
-    $flag=update_option("sinonbangumilist_savedbangumi",$saved_bangumi);
+    $add['name'] = $_POST['name'];
+    $add['date'] = $_POST['date'];
+    $add['count'] = $_POST['count'];
+    $add['title'] = $_POST['title'];
+    $add['status'] = 0;
+    $add['progress'] = 0;
+    $saved_bangumi[$id] = $add;
+    $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
     return $flag;
 }
