@@ -1,7 +1,7 @@
 # Sinon_Bangumi_List
 Sinon的追番列表——Wordpress插件
 
-## 目前项目仍在进行中，进度:30%
+## 目前项目仍在进行中，进度:60%
 
 ## 项目发布及预览
 [预览地址](https://sinon.top/bangumi)  
