@@ -155,7 +155,7 @@ function generate_confirm_page()
         '日文名：<input type="text" name="name" value="' . $add['name'] . '"style="width:50%"><br>' .
         '放送日期：<input type="text" name="date" value="' . $add['date'] . '"style="width:50%"><br>' .
         '总话数：<input type="text" name="count" value="' . $add['count'] . '"style="width:50%"><br>' .
-        '简介：<textarea style="width:50%;height:300px;">' . $add['title'] . '</textarea><br>' .
+        '简介：<textarea style="width:50%;height:300px; name="title">' . $add['title'] . '</textarea><br>' .
         '<input type="submit" value="确认添加" class="button button-primary"></form>' .
         '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃添加" class="button action">';
 }
@@ -165,12 +165,15 @@ function update_bangumi_option()
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $id = (int)$_POST['bangumi_id'];
     $change = $saved_bangumi[$id];
+    $change['status']=(int)$_POST['bg_status'];
     if ($_POST['progress'] == NULL) {
-        $add['progress'] = 0;
+        $change['progress'] = 0;
     } else {
-            $add['progress'] = $_POST['progress'];
+            $change['progress'] = $_POST['progress'];
         }
-    $change['count'] = $_POST['count'];
+    if($_POST['count']!=NULL){
+        $change['count']=$_POST['count'];
+    }
     $saved_bangumi[$id] = $change;
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
     return $flag;
@@ -189,6 +192,7 @@ function add_bangumi_item()
     $add['count']=$_POST['count'];
     $add['title']=$_POST['title'];
     $add['status']=0;
+    $add['progress']=0;
     $saved_bangumi[$id]=$add;
     $flag=update_option("sinonbangumilist_savedbangumi",$saved_bangumi);
     return $flag;
