@@ -149,7 +149,7 @@ function generate_confirm_page()
     $add = get_bangumi_item($id);
     echo '<img src="' . $add['img'] . '"style="width:200px;height:auto;"><br><form action="" method="POST">' .
         '<input type="hidden" name="img" value="' . $add['img'] . '"><input type="hidden" name="bangumi_id" value="' . $add['id'] . '">' .
-        '<input type="hidden name="action" value="3">' .
+        '<input type="hidden" name="action" value="3">' .
         '番剧链接：<input type="text" name="url" value="' . $add['url'] . '"style="width:50%"><br>' .
         '中文名：<input type="text" name="name_cn" value="' . $add['name_cn'] . '"style="width:50%"><br>' .
         '日文名：<input type="text" name="name" value="' . $add['name'] . '"style="width:50%"><br>' .
