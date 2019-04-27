@@ -10,3 +10,6 @@ Sinon的追番列表——Wordpress插件
 
 ## 安装方法
 下载GitHub中release的zip文件，在WordPress的插件安装界面上传安装后即可使用。
+
+## 使用方法
+本插件使用[bangumi 番组计划](http://bgm.tv/)所提供的API获取番剧数据，请在使用时先去此网站上搜索对应的番剧id(即对应的番剧页面url中的那串数字)，输入后插件会自动调用API获取番剧信息并保存。
