@@ -186,6 +186,24 @@ function sinon_bangumi_options()
             echo '<div id="message" class="updated fade"><p>番剧添加失败！</p></div>';
         }
         generate_option_page();
+    } elseif ($_POST['action'] == 4) {
+        $update_flag = del_certain_bangunmi();
+        if ($update_flag == true) {
+            echo '<div id="message" class="updated fade"><p>番剧删除成功！</p></div>';
+        } else {
+            echo '<div id="message" class="updated fade"><p>番剧删除失败！</p></div>';
+        }
+        generate_option_page();
+    } elseif ($_POST['action'] == 5) {
+        $update_flag = del_all_bangunmi();
+        if ($update_flag == true) {
+            echo '<div id="message" class="updated fade"><p>番剧删除成功！</p></div>';
+        } else {
+            echo '<div id="message" class="updated fade"><p>番剧删除失败！</p></div>';
+        }
+        generate_option_page();
+    } elseif ($_POST['action'] == 6) {
+        generate_del_confirm_page();
     }
 }
 
@@ -197,7 +215,8 @@ function generate_option_page()
     if ($saved_bangumi == NULL) {
         echo "看来你还没有添加过番剧呢，要添加一个吗？<br>";
     } else {
-        echo '<table style="line-height: 50px;COLOR: cyan;">';
+        echo '<table style="line-height: 50px;">' .
+            '<tr><td>番剧名称</td><td>番剧状态</td><td>番剧id</td>';
         foreach ($saved_bangumi as $this_bangumi) {
             echo '<tr><td>' . $this_bangumi['name_cn'] . '</td><td>' .
                 '<form action="" method="POST"><input type="hidden" name="action" value="2"><input type="hidden" name="bangumi_id" value="' . $this_bangumi['id'] . '">';
@@ -209,11 +228,14 @@ function generate_option_page()
             } elseif ($this_bangumi['status'] == 2) { //已追完
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1>正在追番</option><option value=2 selected>已追完</option></select>';
             }
-            echo '<input type="submit" value="修改状态" class="button button-primary"></form></td></tr>';
+            echo '<input type="submit" value="修改状态" class="button button-primary"></form></td>' .
+                '<td>' . $this_bangumi['id'] . '</td></tr>';
         }
         echo '</table><br>';
     }
-    echo '<form action="" method="POST"><input type="hidden" name="action" value="1">添加番剧id：<input type="text" name="bangumi_id"><input type="submit" value="添加番剧" class="button button-primary">';
+    echo '<form action="" method="POST"><input type="hidden" name="action" value="1">添加番剧id：<input type="text" name="bangumi_id"><input type="submit" value="添加番剧" class="button button-primary"></form><br>';
+    echo '<form action="" method="POST"><input type="hidden" name="action" value="6">删除番剧id：<input type="text" name="bangumi_id"><input type="submit" value="删除番剧" class="button button-primary" style="color:red;"></form><br>';
+    echo '<form action="" method="POST"><input type="hidden" name="action" value="6"><input type="hidden" name="bangumi_id" value="all"><input type="submit" value="删除全部番剧" class="button button-primary" style="color:red;"></form>';
 }
 
 function generate_confirm_page()
@@ -234,6 +256,30 @@ function generate_confirm_page()
         '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃添加" class="button action">';
 }
 
+function generate_del_confirm_page()
+{
+    echo "<h2>删除番剧确认</h2>";
+    if ($_POST['bangumi_id'] == 'all') {
+        echo '<p style="font-size:30px;color:red">警告！你即将删除所有番剧！该操作不可逆！</p>' .
+            '<form action="" method="POST"><input type="hidden" name="action" value="5"><input type="submit" value="确认删除" class="button button-primary" style="color:red;"></form>' .
+            '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃删除" class="button action">';
+    } else {
+        $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
+        $id = (int)$_POST['bangumi_id'];
+        if ($saved_bangumi[$id] == NULL) {
+            echo '<div id="message" class="updated fade"><p>番剧不存在！</p></div>';
+            generate_option_page();
+        } else {
+            $name = $saved_bangumi[$id]['name_cn'];
+            echo '你即将要删除的番剧为:' . $name . '，确认删除吗？<br>' .
+                '<form action="" method="POST"><input type="hidden" name="action" value="4"><input type="hidden" name="bangumi_id" value="' . $_POST['bangumi_id'] . '">' .
+                '<input type="submit" value="确认删除" class="button button-primary" style="color:red;"></form>' .
+                '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃删除" class="button action">';
+        }
+    }
+}
+
+//更新番剧信息
 function update_bangumi_option()
 {
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
@@ -253,6 +299,7 @@ function update_bangumi_option()
     return $flag;
 }
 
+//添加新的番剧
 function add_bangumi_item()
 {
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
@@ -268,6 +315,23 @@ function add_bangumi_item()
     $add['status'] = 0;
     $add['progress'] = 0;
     $saved_bangumi[$id] = $add;
+    $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
+    return $flag;
+}
+
+//删除所有番剧(删除数据库选项)
+function del_all_bangunmi()
+{
+    $flag = delete_option("sinonbangumilist_savedbangumi");
+    return $flag;
+}
+
+//删除单个番剧
+function del_certain_bangunmi()
+{
+    $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
+    $id = (int)$_POST['bangumi_id'];
+    unset($saved_bangumi[$id]);
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
     return $flag;
 }
