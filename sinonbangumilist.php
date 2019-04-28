@@ -35,7 +35,7 @@ function create_bangumi_list()
             '<img src="' . $saved_bangumi[$id]['img'] . '">' .
             '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
             '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
-            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>.' .
+            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>' .
             '<div class="jinduBG"><div class="jinduText">进度:' . $saved_bangumi[$id]['progress'] . '/' . $saved_bangumi[$id]['count'] . '</div><div class="jinduFG" style="width:' . (string)((double)$saved_bangumi[$id]['progress'] / $saved_bangumi[$id]['count'] * 100) . '%;"></div></div></div></a>';
     }
     if ($status_1 % 2) {
@@ -87,7 +87,7 @@ EOT;
             '<img src="' . $saved_bangumi[$id]['img'] . '">' .
             '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
             '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
-            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>.' .
+            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>' .
             '<div class="jinduBG"><div class="jinduText">进度:0/' . $saved_bangumi[$id]['count'] . '</div><div class="jinduFG" style="width:0%;"></div></div></div></a>';
     }
 }
