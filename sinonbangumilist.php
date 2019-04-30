@@ -3,7 +3,7 @@
 Plugin Name: Sinon的追番列表
 Plugin URI: https://sinon.top/sinon-bangumi-list/
 Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具”菜单中配置追番列表。
-Version: 1.1
+Version: 1.1.1
 Author: Sinon
 Author URI: https://sinon.top/
 */
@@ -39,20 +39,7 @@ function create_bangumi_list()
             '<div class="jinduBG"><div class="jinduText">进度:' . $saved_bangumi[$id]['progress'] . '/' . $saved_bangumi[$id]['count'] . '</div><div class="jinduFG" style="width:' . (string)((double)$saved_bangumi[$id]['progress'] / $saved_bangumi[$id]['count'] * 100) . '%;"></div></div></div></a>';
     }
     if ($status_1 % 2) {
-        echo <<<EOT
-        <a href="http://bgm.tv/subject/0" target="_blank" class="bangumItem">
-        <img src="https://sinon.top/wp-content/uploads/2018/12/JJ_V1WEUNXEPDXMKLU9S.gif">
-        <div class="textBox">占位<br>
-          <br>
-          <br>
-          <div class="jinduBG">
-            <div class="jinduText"></div>
-            <div class="jinduFG" style="width:0%;">
-            </div>
-          </div>
-        </div>
-      </a>
-EOT;
+        echo '<a target="_blank" class="bangumItem"  style="box-shadow: none;"></a>';
     }
     echo '<h2>追完番剧(' . $status_2 . ')</h2>';
     for ($i = 0; $i < $status_2; $i++) {
@@ -65,20 +52,7 @@ EOT;
             '<div class="jinduBG"><div class="jinduText">已追完</div><div class="jinduFG" style="width:100%;"></div></div></div></a>';
     }
     if ($status_2 % 2) {
-        echo <<<EOT
-        <a href="http://bgm.tv/subject/0" target="_blank" class="bangumItem">
-        <img src="https://sinon.top/wp-content/uploads/2018/12/JJ_V1WEUNXEPDXMKLU9S.gif">
-        <div class="textBox">占位<br>
-          <br>
-          <br>
-          <div class="jinduBG">
-            <div class="jinduText"></div>
-            <div class="jinduFG" style="width:0%;">
-            </div>
-          </div>
-        </div>
-      </a>
-EOT;
+        echo '<a target="_blank" class="bangumItem"  style="box-shadow: none;"></a>';
     }
     echo '<h2>待追番剧(' . $status_0 . ')</h2>';
     for ($i = 0; $i < $status_0; $i++) {
