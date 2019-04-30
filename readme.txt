@@ -4,7 +4,7 @@ Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
 Tested up to: 5.1.1
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -37,8 +37,11 @@ Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面
 
 == Changelog ==
 
+= 1.1.3 =
+* 完成WordPress插件标准化，加强安全性。
+
 = 1.1.2 =
-* 根据WordPress插件规范对插件做出修改.
+* 根据WordPress插件规范对插件做出修改。
 
 = 1.1.1 =
 * 取消占位格子显示。
@@ -51,7 +54,7 @@ Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面
 
 == Upgrade Notice ==
 
-= 1.1.2 =
+= 1.1.3 =
 * 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
 
 == Arbitrary section ==
