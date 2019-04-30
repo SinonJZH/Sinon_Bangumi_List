@@ -30,12 +30,13 @@ function create_bangumi_list()
     echo '<h2>正在追番(' . $status_1 . ')</h2>';
     for ($i = 0; $i < $status_1; $i++) {
         $id = $index[1][$i];
-        echo '<a href="' . $saved_bangumi[$id]['url'] . '" target="_blank" class="bangumItem" title="' . $saved_bangumi[$id]['title'] . '">' .
-            '<img src="' . $saved_bangumi[$id]['img'] . '">' .
-            '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
-            '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
-            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>' .
-            '<div class="jinduBG"><div class="jinduText">进度:' . $saved_bangumi[$id]['progress'] . '/' . $saved_bangumi[$id]['count'] . '</div><div class="jinduFG" style="width:' . (string)((double)$saved_bangumi[$id]['progress'] / $saved_bangumi[$id]['count'] * 100) . '%;"></div></div></div></a>';
+        echo '<a href="' . esc_url($saved_bangumi[$id]['url']) . '" target="_blank" class="bangumItem" title="' . esc_attr($saved_bangumi[$id]['title']) . '">' .
+            '<img src="' . esc_url($saved_bangumi[$id]['img']) . '">' .
+            '<div class="textBox">' . esc_attr($saved_bangumi[$id]['name_cn']) .
+            '<br>' . esc_attr($saved_bangumi[$id]['name']) . '<br>' .
+            '首播日期：' . esc_attr($saved_bangumi[$id]['date']) . '<br>' .
+            '<div class="jinduBG"><div class="jinduText">进度:' . esc_attr($saved_bangumi[$id]['progress']) . '/' . esc_attr($saved_bangumi[$id]['count']) .
+            '</div><div class="jinduFG" style="width:' . esc_attr((string)((double)$saved_bangumi[$id]['progress'] / $saved_bangumi[$id]['count'] * 100)) . '%;"></div></div></div></a>';
     }
     if ($status_1 % 2) {
         echo '<a target="_blank" class="bangumItem"  style="box-shadow: none;"></a>';
@@ -43,11 +44,11 @@ function create_bangumi_list()
     echo '<h2>追完番剧(' . $status_2 . ')</h2>';
     for ($i = 0; $i < $status_2; $i++) {
         $id = $index[2][$i];
-        echo '<a href="' . $saved_bangumi[$id]['url'] . '" target="_blank" class="bangumItem" title="' . $saved_bangumi[$id]['title'] . '">' .
-            '<img src="' . $saved_bangumi[$id]['img'] . '">' .
-            '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
-            '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
-            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>' .
+        echo '<a href="' . esc_url($saved_bangumi[$id]['url']) . '" target="_blank" class="bangumItem" title="' . esc_attr($saved_bangumi[$id]['title']) . '">' .
+            '<img src="' . esc_url($saved_bangumi[$id]['img']) . '">' .
+            '<div class="textBox">' . esc_attr($saved_bangumi[$id]['name_cn']) .
+            '<br>' . esc_attr($saved_bangumi[$id]['name']) . '<br>' .
+            '首播日期：' . esc_attr($saved_bangumi[$id]['date']) . '<br>' .
             '<div class="jinduBG"><div class="jinduText">已追完</div><div class="jinduFG" style="width:100%;"></div></div></div></a>';
     }
     if ($status_2 % 2) {
@@ -56,12 +57,13 @@ function create_bangumi_list()
     echo '<h2>待追番剧(' . $status_0 . ')</h2>';
     for ($i = 0; $i < $status_0; $i++) {
         $id = $index[0][$i];
-        echo '<a href="' . $saved_bangumi[$id]['url'] . '" target="_blank" class="bangumItem" title="' . $saved_bangumi[$id]['title'] . '">' .
-            '<img src="' . $saved_bangumi[$id]['img'] . '">' .
-            '<div class="textBox">' . $saved_bangumi[$id]['name_cn'] .
-            '<br>' . $saved_bangumi[$id]['name'] . '<br>' .
-            '首播日期：' . $saved_bangumi[$id]['date'] . '<br>' .
-            '<div class="jinduBG"><div class="jinduText">进度:0/' . $saved_bangumi[$id]['count'] . '</div><div class="jinduFG" style="width:0%;"></div></div></div></a>';
+        echo '<a href="' . esc_url($saved_bangumi[$id]['url']) . '" target="_blank" class="bangumItem" title="' . esc_attr($saved_bangumi[$id]['title']) . '">' .
+            '<img src="' . esc_url($saved_bangumi[$id]['img']) . '">' .
+            '<div class="textBox">' . esc_attr($saved_bangumi[$id]['name_cn']) .
+            '<br>' . esc_attr($saved_bangumi[$id]['name']) . '<br>' .
+            '首播日期：' . esc_attr($saved_bangumi[$id]['date']) . '<br>' .
+            '<div class="jinduBG"><div class="jinduText">进度:0/' . esc_attr($saved_bangumi[$id]['count']) .
+            '</div><div class="jinduFG" style="width:0%;"></div></div></div></a>';
     }
 }
 
@@ -244,14 +246,30 @@ function update_bangumi_option()
 {
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $id = (int)$_POST['bangumi_id'];
+    if (preg_match_all('/^[1-9][0-9]*$/', $_POST['bangumi_id']) == 0) {
+        echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的番剧id！</p></div>';
+        return false;
+    }
+    if (preg_match_all('/^[0-9]*$/', $_POST['bg_status']) == 0) {
+        echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度id！</p></div>';
+        return false;
+    }
     $change = $saved_bangumi[$id];
     $change['status'] = (int)$_POST['bg_status'];
     if ($_POST['progress'] == NULL) {
         $change['progress'] = 0;
     } else {
+        if (preg_match_all('/^[0-9]*$/', $_POST['progress']) == 0) {
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度！</p></div>';
+            return false;
+        }
         $change['progress'] = $_POST['progress'];
     }
     if ($_POST['count'] != NULL) {
+        if (preg_match_all('/^[0-9]*$/', $_POST['count']) == 0) {
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的总集数！</p></div>';
+            return false;
+        }
         $change['count'] = $_POST['count'];
     }
     $saved_bangumi[$id] = $change;
@@ -262,16 +280,28 @@ function update_bangumi_option()
 //添加新的番剧
 function add_bangumi_item()
 {
+    if (preg_match_all('/^[1-9][0-9]*$/', $_POST['bangumi_id']) == 0) {
+        echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的番剧id！</p></div>';
+        return false;
+    }
+    if (preg_match_all('/^[0-9]*$/', $_POST['count']) == 0) {
+        echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的总集数！</p></div>';
+        return false;
+    }
+    if (preg_match_all('/^[0-9][0-9][0-9][0-9]年[0-1]?[0-9]月[0-3]?[0-9]日$/', $_POST['date']) == 0) {
+        echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的首播日期！</p></div>';
+        return false;
+    }
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $id = (int)$_POST['bangumi_id'];
     $add['id'] = $id;
-    $add['img'] = $_POST['img'];
-    $add['url'] = $_POST['url'];
-    $add['name_cn'] = $_POST['name_cn'];
-    $add['name'] = $_POST['name'];
+    $add['img'] = esc_url_raw($_POST['img']);
+    $add['url'] = esc_url_raw($_POST['url']);
+    $add['name_cn'] = sanitize_text_field($_POST['name_cn']);
+    $add['name'] = sanitize_text_field($_POST['name']);
     $add['date'] = $_POST['date'];
     $add['count'] = $_POST['count'];
-    $add['title'] = $_POST['title'];
+    $add['title'] = sanitize_text_field($_POST['title']);
     $add['status'] = 0;
     $add['progress'] = 0;
     $saved_bangumi[$id] = $add;
