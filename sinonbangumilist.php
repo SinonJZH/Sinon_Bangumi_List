@@ -134,33 +134,33 @@ function sinon_bangumi_options()
     } elseif ($_POST['action'] == 2) {
         $update_flag = update_bangumi_option();
         if ($update_flag == true) {
-            echo '<div id="message" class="updated fade"><p>设置已保存！</p></div>';
+            echo '<div id="message" class="notice inline notice-success  is-dismissible"><p>设置已保存！</p></div>';
         } else {
-            echo '<div id="message" class="updated fade"><p>设置保存失败！</p></div>';
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>设置保存失败！</p></div>';
         }
         generate_bangumi_option_page();
     } elseif ($_POST['action'] == 3) {
         $update_flag = add_bangumi_item();
         if ($update_flag == true) {
-            echo '<div id="message" class="updated fade"><p>番剧添加成功！</p></div>';
+            echo '<div id="message" class="notice inline notice-success  is-dismissible"><p>番剧添加成功！</p></div>';
         } else {
-            echo '<div id="message" class="updated fade"><p>番剧添加失败！</p></div>';
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>番剧添加失败！</p></div>';
         }
         generate_bangumi_option_page();
     } elseif ($_POST['action'] == 4) {
         $update_flag = del_certain_bangunmi();
         if ($update_flag == true) {
-            echo '<div id="message" class="updated fade"><p>番剧删除成功！</p></div>';
+            echo '<div id="message" class="notice inline notice-success  is-dismissible"><p>番剧删除成功！</p></div>';
         } else {
-            echo '<div id="message" class="updated fade"><p>番剧删除失败！</p></div>';
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>番剧删除失败！</p></div>';
         }
         generate_bangumi_option_page();
     } elseif ($_POST['action'] == 5) {
         $update_flag = del_all_bangunmi();
         if ($update_flag == true) {
-            echo '<div id="message" class="updated fade"><p>番剧删除成功！</p></div>';
+            echo '<div id="message" class="notice inline notice-success  is-dismissible"><p>番剧删除成功！</p></div>';
         } else {
-            echo '<div id="message" class="updated fade"><p>番剧删除失败！</p></div>';
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>番剧删除失败！</p></div>';
         }
         generate_bangumi_option_page();
     } elseif ($_POST['action'] == 6) {
