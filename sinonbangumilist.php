@@ -231,6 +231,11 @@ function Sinon_BL_generate_bangumi_option_page()
 function Sinon_BL_generate_confirm_page()
 {
     echo "<h2>确认番剧信息</h2>";
+    if (preg_match_all('/^[1-9][0-9]*$/', $_POST['bangumi_id']) == 0) {
+        echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的番剧id！</p></div>';
+        Sinon_BL_generate_bangumi_option_page();
+        return NULL;
+    }
     $id = (int)$_POST['bangumi_id'];
     $add = Sinon_BL_get_bangumi_item($id);
     $add_nonce = wp_create_nonce('Sinon_Bangumi_Action_3');
