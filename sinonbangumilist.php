@@ -3,18 +3,17 @@
 Plugin Name: Sinon的追番列表
 Plugin URI: https://sinon.top/sinon-bangumi-list/
 Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具”菜单中配置追番列表。
-Version: 1.1.1
+Version: 1.1.2
 Author: Sinon
 Author URI: https://sinon.top/
 */
 
-//定义全局变量
-global $saved_bangumi;
 
 //主要功能：在短代码[bangumi]处生成追番列表
 function create_bangumi_list()
 {
-    echo '<link rel="stylesheet" type="text/css" href="/wp-content/plugins/Sinon_Bangumi_List/css/style.css">';
+    $css_url = plugins_url("/Sinon_Bangumi_List/css/style.css");
+    wp_enqueue_style('Sinon_Bangumi_Item', $css_url);
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $status_0 = 0;
     $status_1 = 0;
@@ -68,25 +67,13 @@ function create_bangumi_list()
 
 add_shortcode("bangumi", 'create_bangumi_list');
 
-//使用curl进行get请求
-function get($url, $timeout = 3)
-{
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); // 设置超时
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    $result = curl_exec($ch);
-    curl_close($ch);
-    return $result;
-}
-
 //获取番剧信息
 function get_bangumi_item($id)
 {
-    $URL = "api.bgm.tv/subject/" . (string)$id . "?responseGroup=Small";
-    $bangumi = get($URL);
-    $bg_json = json_decode($bangumi, true);
+    $URL = "http://api.bgm.tv/subject/" . (string)$id . "?responseGroup=Small";
+    $request = wp_remote_get($URL);
+    $response = wp_remote_retrieve_body($request);;
+    $bg_json = json_decode($response, true);
     $date = explode('-', $bg_json['air_date']);
     $date[1] = ltrim($date[1], '0');
     $date[2] = ltrim($date[2], '0');
@@ -141,7 +128,7 @@ function sinon_bangumi_options()
         wp_die(__('权限不足，无法操作！'));
     }
     if ($_POST['action'] == NULL) {
-        generate_option_page();
+        generate_bangumi_option_page();
     } elseif ($_POST['action'] == 1) {
         generate_confirm_page();
     } elseif ($_POST['action'] == 2) {
@@ -151,7 +138,7 @@ function sinon_bangumi_options()
         } else {
             echo '<div id="message" class="updated fade"><p>设置保存失败！</p></div>';
         }
-        generate_option_page();
+        generate_bangumi_option_page();
     } elseif ($_POST['action'] == 3) {
         $update_flag = add_bangumi_item();
         if ($update_flag == true) {
@@ -159,7 +146,7 @@ function sinon_bangumi_options()
         } else {
             echo '<div id="message" class="updated fade"><p>番剧添加失败！</p></div>';
         }
-        generate_option_page();
+        generate_bangumi_option_page();
     } elseif ($_POST['action'] == 4) {
         $update_flag = del_certain_bangunmi();
         if ($update_flag == true) {
@@ -167,7 +154,7 @@ function sinon_bangumi_options()
         } else {
             echo '<div id="message" class="updated fade"><p>番剧删除失败！</p></div>';
         }
-        generate_option_page();
+        generate_bangumi_option_page();
     } elseif ($_POST['action'] == 5) {
         $update_flag = del_all_bangunmi();
         if ($update_flag == true) {
@@ -175,14 +162,14 @@ function sinon_bangumi_options()
         } else {
             echo '<div id="message" class="updated fade"><p>番剧删除失败！</p></div>';
         }
-        generate_option_page();
+        generate_bangumi_option_page();
     } elseif ($_POST['action'] == 6) {
         generate_del_confirm_page();
     }
 }
 
 //番剧修改菜单
-function generate_option_page()
+function generate_bangumi_option_page()
 {
     echo "<h2>修改番剧信息</h2>";
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
@@ -190,7 +177,7 @@ function generate_option_page()
         echo "看来你还没有添加过番剧呢，要添加一个吗？<br>";
     } else {
         echo '<table style="line-height: 50px;">' .
-            '<tr><td>番剧名称</td><td>番剧状态</td><td>番剧id</td>';
+            '<tr><td>番剧名称</td><td>番剧状态</td><td>删除按钮</td>';
         foreach ($saved_bangumi as $this_bangumi) {
             echo '<tr><td>' . $this_bangumi['name_cn'] . '</td><td>' .
                 '<form action="" method="POST"><input type="hidden" name="action" value="2"><input type="hidden" name="bangumi_id" value="' . $this_bangumi['id'] . '">';
@@ -203,12 +190,11 @@ function generate_option_page()
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1>正在追番</option><option value=2 selected>已追完</option></select>';
             }
             echo '<input type="submit" value="修改状态" class="button button-primary"></form></td>' .
-                '<td>' . $this_bangumi['id'] . '</td></tr>';
+                '<td><form action="" method="POST"><input type="hidden" name="action" value="6"><input type="hidden" name="bangumi_id" value="' . $this_bangumi['id'] . '"><input type="submit" value="删除" class="button button-primary" style="color:red;"></form></td></tr>';
         }
         echo '</table><br>';
     }
     echo '<form action="" method="POST"><input type="hidden" name="action" value="1">添加番剧id：<input type="text" name="bangumi_id"><input type="submit" value="添加番剧" class="button button-primary"></form><br>';
-    echo '<form action="" method="POST"><input type="hidden" name="action" value="6">删除番剧id：<input type="text" name="bangumi_id"><input type="submit" value="删除番剧" class="button button-primary" style="color:red;"></form><br>';
     echo '<form action="" method="POST"><input type="hidden" name="action" value="6"><input type="hidden" name="bangumi_id" value="all"><input type="submit" value="删除全部番剧" class="button button-primary" style="color:red;"></form>';
 }
 
@@ -242,7 +228,7 @@ function generate_del_confirm_page()
         $id = (int)$_POST['bangumi_id'];
         if ($saved_bangumi[$id] == NULL) {
             echo '<div id="message" class="updated fade"><p>番剧不存在！</p></div>';
-            generate_option_page();
+            generate_bangumi_option_page();
         } else {
             $name = $saved_bangumi[$id]['name_cn'];
             echo '你即将要删除的番剧为:' . $name . '，确认删除吗？<br>' .
