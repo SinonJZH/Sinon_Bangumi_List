@@ -6,8 +6,8 @@ Requires at least: 4.6
 Tested up to: 5.1.1
 Stable tag: 1.1.2
 Requires PHP: 5.2.4
-License: GPLv2
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面上生成追番列表，在“工具”菜单中配置追番列表。
 
