@@ -12,7 +12,7 @@ Author URI: https://sinon.top/
 //主要功能：在短代码[bangumi]处生成追番列表
 function Sinon_BL_create_bangumi_list()
 {
-    $css_url = plugins_url("/Sinon_Bangumi_List/css/style.css");
+    $css_url = esc_url(plugins_url('css/style.css', __FILE__));
     wp_enqueue_style('Sinon_Bangumi_Item', $css_url);
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $status_0 = 0;
@@ -194,25 +194,25 @@ function Sinon_BL_generate_bangumi_option_page()
         echo '<table style="line-height: 50px;">' .
             '<tr><td>番剧名称</td><td>番剧状态</td><td>删除按钮</td>';
         foreach ($saved_bangumi as $this_bangumi) {
-            echo '<tr><td>' . $this_bangumi['name_cn'] . '</td><td>' .
+            echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
                 '<form action="" method="POST"><input type="hidden" name="action" value="2">
-                <input type="hidden" name="nonce" value="' . $change_nonce . '">
-                <input type="hidden" name="bangumi_id" value="' . $this_bangumi['id'] . '">';
+                <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
+                <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">';
             if ($this_bangumi['status'] == 0) { //待追番
                 echo  '<select name="bg_status"><option value="0" selected>待追番</option>
                 <option value=1>正在追番</option><option value=2>已追完</option></select>';
             } elseif ($this_bangumi['status'] == 1) { //正在追番
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1 selected>正在追番</option>
                 <option value=2>已追完</option></select>';
-                echo  '看番进度：<input type="text" name="progress" value="' . $this_bangumi['progress'] .
-                    '"style="width: 30px;">总集数：<input type="text" name="count" value="' . $this_bangumi['count'] .
+                echo  '看番进度：<input type="text" name="progress" value="' . esc_attr($this_bangumi['progress']) .
+                    '"style="width: 30px;">总集数：<input type="text" name="count" value="' . esc_attr($this_bangumi['count']) .
                     '"style="width: 30px;">';
             } elseif ($this_bangumi['status'] == 2) { //已追完
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1>正在追番</option><option value=2 selected>已追完</option></select>';
             }
             echo '<input type="submit" value="修改状态" class="button button-primary"></form></td>' .
                 '<td><form action="" method="POST"><input type="hidden" name="action" value="6">
-                <input type="hidden" name="bangumi_id" value="' . $this_bangumi['id'] .
+                <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) .
                 '"><input type="hidden" name="nonce" value="' . $delete_nonce . '">
                 <input type="submit" value="删除" class="button button-primary" style="color:red;"></form></td></tr>';
         }
@@ -239,16 +239,16 @@ function Sinon_BL_generate_confirm_page()
     $id = (int)$_POST['bangumi_id'];
     $add = Sinon_BL_get_bangumi_item($id);
     $add_nonce = wp_create_nonce('Sinon_Bangumi_Action_3');
-    echo '<img src="' . $add['img'] . '"style="width:200px;height:auto;"><br><form action="" method="POST">' .
-        '<input type="hidden" name="img" value="' . $add['img'] . '"><input type="hidden" name="bangumi_id" value="' . $add['id'] . '">' .
+    echo '<img src="' . esc_url($add['img']) . '"style="width:200px;height:auto;"><br><form action="" method="POST">' .
+        '<input type="hidden" name="img" value="' . esc_url($add['img']) . '"><input type="hidden" name="bangumi_id" value="' . esc_attr($add['id']) . '">' .
         '<input type="hidden" name="action" value="3">' .
         '<input type="hidden" name="nonce" value="' . $add_nonce . '">' .
-        '番剧链接：<input type="text" name="url" value="' . $add['url'] . '"style="width:50%"><br>' .
-        '中文名：<input type="text" name="name_cn" value="' . $add['name_cn'] . '"style="width:50%"><br>' .
-        '日文名：<input type="text" name="name" value="' . $add['name'] . '"style="width:50%"><br>' .
-        '放送日期：<input type="text" name="date" value="' . $add['date'] . '"style="width:50%"><br>' .
-        '总话数：<input type="text" name="count" value="' . $add['count'] . '"style="width:50%"><br>' .
-        '简介：<textarea style="width:50%;height:300px;" name="title">' . $add['title'] . '</textarea><br>' .
+        '番剧链接：<input type="text" name="url" value="' . esc_url($add['url']) . '"style="width:50%"><br>' .
+        '中文名：<input type="text" name="name_cn" value="' . esc_attr($add['name_cn']) . '"style="width:50%"><br>' .
+        '日文名：<input type="text" name="name" value="' . esc_attr($add['name']) . '"style="width:50%"><br>' .
+        '放送日期：<input type="text" name="date" value="' . esc_attr($add['date']) . '"style="width:50%"><br>' .
+        '总话数：<input type="text" name="count" value="' . esc_attr($add['count']) . '"style="width:50%"><br>' .
+        '简介：<textarea style="width:50%;height:300px;" name="title">' . esc_attr($add['title']) . '</textarea><br>' .
         '<input type="submit" value="确认添加" class="button button-primary"></form>' .
         '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃添加" class="button action">';
 }
@@ -256,26 +256,30 @@ function Sinon_BL_generate_confirm_page()
 function Sinon_BL_generate_del_confirm_page()
 {
     echo "<h2>删除番剧确认</h2>";
-    $del_once_nonce=wp_create_nonce('Sinon_Bangumi_Action_4');
-    $del_all_nonce=wp_create_nonce('Sinon_Bangumi_Action_5');
+    $del_once_nonce = wp_create_nonce('Sinon_Bangumi_Action_4');
+    $del_all_nonce = wp_create_nonce('Sinon_Bangumi_Action_5');
     if ($_POST['bangumi_id'] == 'all') {
         echo '<p style="font-size:30px;color:red">警告！你即将删除所有番剧！该操作不可逆！</p>' .
             '<form action="" method="POST"><input type="hidden" name="action" value="5">
-            <input type="hidden" name="nonce" value="'.$del_all_nonce.'">
+            <input type="hidden" name="nonce" value="' . $del_all_nonce . '">
             <input type="submit" value="确认删除" class="button button-primary" style="color:red;"></form>' .
             '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃删除" class="button action">';
     } else {
+        if (preg_match_all('/^[1-9][0-9]*$/', $_POST['bangumi_id']) == 0) {
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的番剧id！</p></div>';
+            return false;
+        }
         $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
-        $id = (int)$_POST['bangumi_id'];
+        $id = (int)sanitize_text_field($_POST['bangumi_id']);
         if ($saved_bangumi[$id] == NULL) {
             echo '<div id="message" class="updated fade"><p>番剧不存在！</p></div>';
             Sinon_BL_generate_bangumi_option_page();
         } else {
             $name = $saved_bangumi[$id]['name_cn'];
-            echo '你即将要删除的番剧为:' . $name . '，确认删除吗？<br>' .
+            echo '你即将要删除的番剧为:' . esc_attr($name) . '，确认删除吗？<br>' .
                 '<form action="" method="POST"><input type="hidden" name="action" value="4">
-                <input type="hidden" name="bangumi_id" value="' . $_POST['bangumi_id'] . '">
-                <input type="hidden" name="nonce" value="'.$del_once_nonce.'">
+                <input type="hidden" name="bangumi_id" value="' . esc_attr($_POST['bangumi_id']) . '">
+                <input type="hidden" name="nonce" value="' . $del_once_nonce . '">
                 <input type="submit" value="确认删除" class="button button-primary" style="color:red;"></form>' .
                 '<form action="" method="POST"><input type="hidden" name="wtf"><input type="submit" value="放弃删除" class="button action">';
         }
@@ -296,7 +300,7 @@ function Sinon_BL_update_bangumi_option()
         return false;
     }
     $change = $saved_bangumi[$id];
-    $change['status'] = (int)$_POST['bg_status'];
+    $change['status'] = (int)sanitize_text_field($_POST['bg_status']);
     if ($_POST['progress'] == NULL) {
         $change['progress'] = 0;
     } else {
@@ -304,14 +308,14 @@ function Sinon_BL_update_bangumi_option()
             echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度！</p></div>';
             return false;
         }
-        $change['progress'] = $_POST['progress'];
+        $change['progress'] = sanitize_text_field($_POST['progress']);
     }
     if ($_POST['count'] != NULL) {
         if (preg_match_all('/^[0-9]*$/', $_POST['count']) == 0) {
             echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的总集数！</p></div>';
             return false;
         }
-        $change['count'] = $_POST['count'];
+        $change['count'] = sanitize_text_field($_POST['count']);
     }
     $saved_bangumi[$id] = $change;
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
@@ -340,8 +344,8 @@ function Sinon_BL_add_bangumi_item()
     $add['url'] = esc_url_raw($_POST['url']);
     $add['name_cn'] = sanitize_text_field($_POST['name_cn']);
     $add['name'] = sanitize_text_field($_POST['name']);
-    $add['date'] = $_POST['date'];
-    $add['count'] = $_POST['count'];
+    $add['date'] = sanitize_text_field($_POST['date']);
+    $add['count'] = sanitize_text_field($_POST['count']);
     $add['title'] = sanitize_text_field($_POST['title']);
     $add['status'] = 0;
     $add['progress'] = 0;
