@@ -205,7 +205,8 @@ function Sinon_BL_generate_bangumi_option_page()
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1 selected>正在追番</option>
                 <option value=2>已追完</option></select>';
                 echo  '看番进度：<input type="text" name="progress" value="' . esc_attr($this_bangumi['progress']) .
-                    '"style="width: 30px;">总集数：<input type="text" name="count" value="' . esc_attr($this_bangumi['count']) .
+                    '"style="width: 30px;" id="'.$this_bangumi['id'].'"><botton class="button" onclick="add_one_process('.
+                    $this_bangumi['id'].')">+1</botton>总集数：<input type="text" name="count" value="' . esc_attr($this_bangumi['count']) .
                     '"style="width: 30px;">';
             } elseif ($this_bangumi['status'] == 2) { //已追完
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1>正在追番</option><option value=2 selected>已追完</option></select>';
@@ -370,3 +371,12 @@ function Sinon_BL_del_certain_bangunmi()
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
     return $flag;
 }
+
+//加载后台js脚本
+function Sinon_BL_Enqueue_Adminpage_Script()
+{
+    $js_url = esc_url(plugins_url('js/admin_page.js', __FILE__));
+    wp_enqueue_script('Sinon_Bangumi_Adminpage_JS',$js_url);
+}
+
+add_action('admin_enqueue_scripts','Sinon_BL_Enqueue_Adminpage_Script');
