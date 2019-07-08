@@ -210,7 +210,7 @@ function Sinon_BL_generate_bangumi_option_page()
             } elseif ($this_bangumi['status'] == 2) { //已追完
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1>正在追番</option><option value=2 selected>已追完</option></select>';
             }
-            echo '<input type="submit" value="修改状态" class="button button-primary"></form>';
+            echo '<input type="submit" value="修改状态" class="button button-primary" style="vertical-align:middle;"></form>';
             if ($this_bangumi['status'] == 1) {
                 echo '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
@@ -222,7 +222,7 @@ function Sinon_BL_generate_bangumi_option_page()
             echo '</td>' . '<td><form action="" method="POST"><input type="hidden" name="action" value="6">
                 <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) .
                 '"><input type="hidden" name="nonce" value="' . $delete_nonce . '">
-                <input type="submit" value="删除" class="button button-primary" style="color:red;"></form></td></tr>';
+                <input type="submit" value="删除" class="button button-primary" style="color:red;vertical-align:middle;"></form></td></tr>';
         }
         echo '</table><br>';
     }
