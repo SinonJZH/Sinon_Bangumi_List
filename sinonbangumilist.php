@@ -214,10 +214,14 @@ function Sinon_BL_generate_bangumi_option_page()
             if ($this_bangumi['status'] == 1) {
                 echo '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
-                <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">
-                <input type="hidden" name="bg_status" value="1"><input type="hidden" name="count" value="' . esc_attr($this_bangumi['count']) . '">
-                <input type="hidden" name="progress" value="' . esc_attr($this_bangumi['progress'] + 1) . '">
+                <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">';
+                if ($this_bangumi['progress'] < $this_bangumi['count']) {
+                    echo '<input type="hidden" name="progress" value="' . esc_attr($this_bangumi['progress'] + 1) . '">
                 <input type="submit" value="进度+1" class="button button-primary"></form>';
+                } else {
+                    echo '<input type="hidden" name="bg_status" value="2">
+                    <input type="submit" value="设置为已追完" class="button button-primary"></form>';
+                }
             }
             echo '</td>' . '<td><form action="" method="POST"><input type="hidden" name="action" value="6">
                 <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) .
@@ -298,17 +302,19 @@ function Sinon_BL_generate_del_confirm_page()
 function Sinon_BL_update_bangumi_option()
 {
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
-    $id = (int) $_POST['bangumi_id'];
     if (preg_match_all('/^[1-9][0-9]*$/', $_POST['bangumi_id']) == 0) {
         echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的番剧id！</p></div>';
         return false;
     }
-    if (preg_match_all('/^[0-9]*$/', $_POST['bg_status']) == 0) {
-        echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度id！</p></div>';
-        return false;
-    }
+    $id = (int) $_POST['bangumi_id'];
     $change = $saved_bangumi[$id];
-    $change['status'] = (int) sanitize_text_field($_POST['bg_status']);
+    if ($_POST['bg_status'] != NULL) {
+        if (preg_match_all('/^[0-9]*$/', $_POST['bg_status']) == 0) {
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度id！</p></div>';
+            return false;
+        }
+        $change['status'] = (int) sanitize_text_field($_POST['bg_status']);
+    }
     if ($_POST['progress'] == NULL) {
         $change['progress'] = 0;
     } else {
