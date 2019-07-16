@@ -332,6 +332,7 @@ function Sinon_BL_update_bangumi_option()
         $change['count'] = sanitize_text_field($_POST['count']);
     }
     $saved_bangumi[$id] = $change;
+    uasort($saved_bangumi,'Sinon_BL_sort_cmp');
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
     return $flag;
 }
@@ -364,6 +365,7 @@ function Sinon_BL_add_bangumi_item()
     $add['status'] = 0;
     $add['progress'] = 0;
     $saved_bangumi[$id] = $add;
+    uasort($saved_bangumi,'Sinon_BL_sort_cmp');
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
     return $flag;
 }
@@ -381,6 +383,22 @@ function Sinon_BL_del_certain_bangunmi()
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $id = (int) $_POST['bangumi_id'];
     unset($saved_bangumi[$id]);
+    uasort($saved_bangumi,'Sinon_BL_sort_cmp');
     $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
     return $flag;
+}
+
+//番剧排序比较函数
+function Sinon_BL_sort_cmp($a, $b)
+{
+    if($a['status']==1 && $b['status']==1){
+        return $a['progress'] < $b['progress'];
+    }
+    if ($a['status'] == 1) $c = 1;
+    elseif ($a['status'] == 0) $c = 2;
+    else $c = 3;
+    if ($b['status'] == 1) $d = 1;
+    elseif ($b['status'] == 0) $d = 2;
+    else $d = 3;
+    return $c > $d;
 }
