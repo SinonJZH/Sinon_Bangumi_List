@@ -3,8 +3,8 @@ Contributors: sinonjzh
 Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
-Tested up to: 5.1.1
-Stable tag: 1.1.3
+Tested up to: 5.2.2
+Stable tag: 1.1.4
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -38,7 +38,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 = 如何获取番剧id？ =
 
-请至bgm.tv上搜索番剧并查看id(在番剧页面url)
+请至http://bgm.tv/ 上搜索番剧并查看id(在番剧页面url)
 
 
 == Screenshots ==
@@ -47,6 +47,11 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 2. /assets/screenshot-2.png
 
 == Changelog ==
+
+= 1.1.4 =
+* 在正在追番的番剧下添加“进度+1”按钮
+* 将后台菜单的番剧列表按照追番状态排序
+* 优化CSS样式
 
 = 1.1.3 =
 * 完成WordPress插件标准化，加强安全性。
