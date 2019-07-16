@@ -1,78 +1,90 @@
+a.bangumItem {
+  line-height: 20px;
+  white-space: nowrap;
+  box-shadow: 0px 0px 5px black;
+  width: 46%;
+  margin: 1.5%;
+  float: left;
+  overflow: hidden;
+  display: block;
+  padding: 1%;
+  height: 88px;
+  color: aqua;
+  border: 1px solid;
+  border-radius: 10px;
+}
 
+a.bangumItem:hover {
+  color: aqua;
+  opacity: 0.8;
+  filter: saturate(150%);
+  -webkit-filter: saturate(150%);
+  -moz-filter: saturate(150%);
+  -o-filter: saturate(150%);
+  -ms-filter: saturate(150%);
+}
+
+a.bangumItem img {
+  height: 88px;
+  float: left;
+  padding-right: 5px;
+}
+
+a.bangumItem .textBox {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  height: 81px;
+  font-size: 18px;
+}
+
+a.bangumItem div.jinduBG {
+  height: 18px;
+  width: 100%;
+  background-color: gray;
+  display: inline-block;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 3px;
+}
+
+a.bangumItem div.jinduFG {
+  height: 18px;
+  background-color: #3aee85;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 0px;
+  z-index: 1;
+  -webkit-animation: jdanimi 2s ease-out forwards;
+  -moz-animation: jdanimi 2s ease-out forwards;
+  -o-animation: jdanimi 2s ease-out forwards;
+  -ms-animation: jdanimi 2s ease-out forwards;
+  animation: jdanimi 2s ease-out forwards;
+}
+
+a.bangumItem div.jinduText {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  color: rgb(49, 30, 214);
+  line-height: 15px;
+  font-size: 15px;
+  position: absolute;
+  bottom: 0px;
+  z-index: 2;
+}
+
+@media screen and (max-width:1000px) {
   a.bangumItem {
-    line-height: 20px;
-    white-space: nowrap;
-    box-shadow: 0px 0px 3px rgba(0, 183, 255, 0.2);
-    width: 46%;
-    margin: 1.5%;
-    float: left;
-    overflow: hidden;
-    display: block;
-    padding: 1%;
-    height: 88px;
-    color: aqua;
+    width: 95%;
+  }
+}
+
+@keyframes jdanimi {
+  0% {
+    width: 0%;
   }
 
-  a.bangumItem:hover {
-    color: aqua;
-    opacity: 0.8;
-    filter: saturate(150%);
-    -webkit-filter: saturate(150%);
-    -moz-filter: saturate(150%);
-    -o-filter: saturate(150%);
-    -ms-filter: saturate(150%);
-  }
-
-  a.bangumItem img {
-    width: 60px;
-    height: 88px;
-    display: inline-block;
-    float: left;
-    padding-right: 5px;
-  }
-
-  a.bangumItem .textBox {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    position: relative;
-    z-index: 1;
-    height: 81px;
-    font-size: 18px;
-  }
-
-  a.bangumItem div.jinduBG {
-    height: 18px;
-    width: 100%;
-    background-color: gray;
-    display: inline-block;
-    border-radius: 4px;
-    position: absolute;
-    bottom: 3px;
-  }
-
-  a.bangumItem div.jinduFG {
-    height: 18px;
-    background-color: #3aee85;
-    border-radius: 4px;
-    position: absolute;
-    bottom: 0px;
-    z-index: 1;
-  }
-
-  a.bangumItem div.jinduText {
-    width: 100%;
-    height: auto;
-    text-align: center;
-    color: rgb(49, 30, 214);
-    line-height: 15px;
-    font-size: 15px;
-    position: absolute;
-    bottom: 0px;
-    z-index: 2;
-  }
-
-  @media screen and (max-width:1000px) {
-    a.bangumItem {
-      width: 95%;
-    }
-  }
+  100% {}
+}
