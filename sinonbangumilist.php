@@ -43,7 +43,7 @@ function Sinon_BL_create_bangumi_list()
             '%;"></div></div></div></a>';
     }
     if ($status_1 % 2) {
-        echo '<a target="_blank" class="bangumItem"  style="box-shadow: none;"></a>';
+        echo '<a target="_blank" class="bangumItem"  style="box-shadow: none;border:none;"></a>';
     }
     echo '<h2>追完番剧(' . $status_2 . ')</h2>';
     for ($i = 0; $i < $status_2; $i++) {
@@ -56,7 +56,7 @@ function Sinon_BL_create_bangumi_list()
             '<div class="jinduBG"><div class="jinduText">已追完</div><div class="jinduFG" style="width:100%;"></div></div></div></a>';
     }
     if ($status_2 % 2) {
-        echo '<a target="_blank" class="bangumItem"  style="box-shadow: none;"></a>';
+        echo '<a target="_blank" class="bangumItem"  style="box-shadow: none;border:none;"></a>';
     }
     echo '<h2>待追番剧(' . $status_0 . ')</h2>';
     for ($i = 0; $i < $status_0; $i++) {
