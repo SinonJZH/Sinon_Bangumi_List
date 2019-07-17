@@ -191,26 +191,38 @@ function Sinon_BL_generate_bangumi_option_page()
     $change_nonce = wp_create_nonce('Sinon_Bangumi_Action_2');
     $delete_nonce = wp_create_nonce('Sinon_Bangumi_Action_6');
     $search_nonce = wp_create_nonce('Sinon_Bangumi_Action_7');
+    echo '过滤器：<form action="" method="GET"><select name="filter"><option value=""';if($_GET['filter']==NULL)echo 'selected';echo '>全部</option><option value="0"';if($_GET['filter']==='0')echo 'selected';echo '>待追番</option><option value="1"';if($_GET['filter']==1)echo 'selected';echo '>正在追番</option><option value="2"';if($_GET['filter']==2)echo 'selected';echo '>已追完</option></select><input type="hidden" name="page" value="sinon_bangumi_list"><input type="submit" class="button button-primary" value="应用"></form>';
     if ($saved_bangumi == NULL) {
         echo "看来你还没有添加过番剧呢，要添加一个吗？<br>";
     } else {
         echo '<table style="line-height: 50px;text-align: center;">' .
             '<tr><td style="width:300px">番剧名称</td><td style="width:400px">番剧状态</td><td style="width:auto">删除按钮</td>';
         foreach ($saved_bangumi as $this_bangumi) {
-            echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
+            if ($this_bangumi['status'] == 0) { //待追番
+                if($_GET['filter']!=NULL && $_GET['filter']!=0)continue;
+                echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
                 '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
                 <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">';
-            if ($this_bangumi['status'] == 0) { //待追番
                 echo  '<select name="bg_status"><option value="0" selected>待追番</option>
                 <option value=1>正在追番</option><option value=2>已追完</option></select>';
             } elseif ($this_bangumi['status'] == 1) { //正在追番
+                if($_GET['filter']!=NULL && $_GET['filter']!=1)continue;
+                echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
+                '<form action="" method="POST"><input type="hidden" name="action" value="2">
+                <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
+                <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">';
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1 selected>正在追番</option>
                 <option value=2>已追完</option></select>';
                 echo  '看番进度：<input type="text" name="progress" value="' . esc_attr($this_bangumi['progress']) .
                     '"style="width: 30px;">总集数：<input type="text" name="count" value="' . esc_attr($this_bangumi['count']) .
                     '"style="width: 30px;">';
             } elseif ($this_bangumi['status'] == 2) { //已追完
+                if($_GET['filter']!=NULL && $_GET['filter']!=2)continue;
+                echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
+                '<form action="" method="POST"><input type="hidden" name="action" value="2">
+                <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
+                <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">';
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1>正在追番</option><option value=2 selected>已追完</option></select>';
             }
             echo '<input type="submit" value="修改状态" class="button button-primary" style="vertical-align:middle;"></form>';
