@@ -2,6 +2,9 @@
 Sinon的追番列表——Wordpress插件
 
 ## 更新日志
+### v1.2
+* 添加了在插件内直接搜索番剧的功能
+* 添加了后台按状态筛选番剧的过滤器
 #### v1.1.4
 * 在正在追番的番剧下添加“进度+1”按钮
 * 将后台菜单的番剧列表按照追番状态排序
@@ -18,8 +21,8 @@ Sinon的追番列表——Wordpress插件
 * 提供基础的番剧列表生成和管理功能，后续会添加其他新的功能。
 
 ## 项目发布及预览
-[预览地址](https://sinon.top/bangumi)  
-发布地址：见该仓库的release  
+[预览地址](https://sinon.top/bangumi)
+发布地址：见该仓库的release
 
 ## 更新方法
 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
@@ -28,8 +31,9 @@ Sinon的追番列表——Wordpress插件
 下载GitHub中release的zip文件，在WordPress的插件安装界面上传安装后即可使用。
 
 ## 使用方法
-本插件使用[bangumi 番组计划](http://bgm.tv/)所提供的API获取番剧数据，
-请在使用时先去此网站上搜索对应的番剧id(即对应的番剧页面url中的那串数字)，
+本插件使用[bangumi 番组计划](http://bgm.tv/)所提供的API获取番剧数据。
+使用时只需在插件页面搜索番剧名称，并在搜索结果中选择要添加的番剧添加即可，
+也可以在番组计划的官网搜索番剧id(即对应的番剧页面url中的那串数字)，
 输入后插件会自动调用API获取番剧信息并保存。
 
 ## 注意
@@ -40,6 +44,6 @@ Sinon的追番列表——Wordpress插件
 
 This plugin uses a third-party api, the api provider is [bangumi 番组计划] (http://bgm.tv/), and the api address is: http://bgm.tv.
 Detailed api documentation can be found at https://github.com/bangumi/api.
-Please note that bgm.tv is currently a reliable website, but there is no guarantee that the website api service will always be available. 
+Please note that bgm.tv is currently a reliable website, but there is no guarantee that the website api service will always be available.
 The author is not responsible for any problems caused by calling the api.
 Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.

@@ -4,18 +4,18 @@ Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
 Tested up to: 5.2.2
-Stable tag: 1.1.4
+Stable tag: 1.2.0
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面上生成追番列表，在“工具”菜单中配置追番列表。
+Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面上生成追番列表，在“工具-更新追番列表”菜单中配置追番列表。
 
 == Description ==
 
-Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面上生成追番列表，在“工具”菜单中配置追番列表。
-本插件使用[bangumi 番组计划](http://bgm.tv/)所提供的API获取番剧数据，
-请在使用时先去此网站上搜索对应的番剧id(即对应的番剧页面url中的那串数字)，
+本插件使用[bangumi 番组计划](http://bgm.tv/)所提供的API获取番剧数据。
+使用时只需在插件页面搜索番剧名称，并在搜索结果中选择要添加的番剧添加即可，
+也可以在番组计划的官网搜索番剧id(即对应的番剧页面url中的那串数字)，
 输入后插件会自动调用API获取番剧信息并保存。
 ## 注意
 本插件使用了第三方api,api提供者为[bangumi 番组计划](http://bgm.tv/),api地址为：http://bgm.tv。
@@ -25,7 +25,7 @@ Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面
 
 This plugin uses a third-party api, the api provider is [bangumi 番组计划] (http://bgm.tv/), and the api address is: http://bgm.tv.
 Detailed api documentation can be found at https://github.com/bangumi/api.
-Please note that bgm.tv is currently a reliable website, but there is no guarantee that the website api service will always be available. 
+Please note that bgm.tv is currently a reliable website, but there is no guarantee that the website api service will always be available.
 The author is not responsible for any problems caused by calling the api.
 Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
@@ -36,9 +36,9 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Frequently Asked Questions ==
 
-= 如何获取番剧id？ =
+= 如何添加番剧？ =
 
-请至http://bgm.tv/ 上搜索番剧并查看id(在番剧页面url)
+现在，只需要在插件内搜索番剧名称并添加就可以了。
 
 
 == Screenshots ==
@@ -47,6 +47,10 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 2. /assets/screenshot-2.png
 
 == Changelog ==
+
+= 1.2.0 =
+* 添加了在插件内直接搜索番剧的功能
+* 添加了后台按状态筛选番剧的过滤器
 
 = 1.1.4 =
 * 在正在追番的番剧下添加“进度+1”按钮
@@ -70,7 +74,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Upgrade Notice ==
 
-= 1.1.3 =
+= 1.2.0 =
 * 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
 
 == Arbitrary section ==
