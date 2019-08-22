@@ -226,11 +226,12 @@ function Sinon_BL_generate_bangumi_option_page()
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1>正在追番</option><option value=2 selected>已追完</option></select>';
             }
             echo '<input type="submit" value="修改状态" class="button button-primary" style="vertical-align:middle;"></form>';
+            //快速进度+1按钮
             if ($this_bangumi['status'] == 1) {
                 echo '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
                 <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">';
-                if ($this_bangumi['progress'] < $this_bangumi['count']) {
+                if ($this_bangumi['progress'] < $this_bangumi['count'] - 1) {
                     echo '<input type="hidden" name="progress" value="' . esc_attr($this_bangumi['progress'] + 1) . '">
                 <input type="submit" value="进度+1" class="button button-primary"></form>';
                 } else {
