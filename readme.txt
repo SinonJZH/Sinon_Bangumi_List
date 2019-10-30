@@ -3,8 +3,8 @@ Contributors: sinonjzh
 Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
-Tested up to: 5.2.2
-Stable tag: 1.2.0
+Tested up to: 5.2.4
+Stable tag: 1.2.1
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -17,6 +17,9 @@ Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面
 使用时只需在插件页面搜索番剧名称，并在搜索结果中选择要添加的番剧添加即可，
 也可以在番组计划的官网搜索番剧id(即对应的番剧页面url中的那串数字)，
 输入后插件会自动调用API获取番剧信息并保存。
+
+Development:https://github.com/SinonJZH/Sinon_Bangumi_List
+
 ## 注意
 本插件使用了第三方api,api提供者为[bangumi 番组计划](http://bgm.tv/),api地址为：http://bgm.tv。
 详细api文档请参见：https://github.com/bangumi/api。
@@ -47,6 +50,10 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 2. /assets/screenshot-2.png
 
 == Changelog ==
+
+= 1.2.1 =
+* 添加了编辑番剧信息的功能
+* 获取番剧信息时，若中文名为空，自动将原名移至中文名一栏
 
 = 1.2.0 =
 * 添加了在插件内直接搜索番剧的功能
