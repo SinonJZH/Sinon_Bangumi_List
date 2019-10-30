@@ -3,7 +3,7 @@ Contributors: sinonjzh
 Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
-Tested up to: 5.2.4
+Tested up to: 5.3
 Stable tag: 1.2.1
 Requires PHP: 5.2.4
 License: GPLv3
