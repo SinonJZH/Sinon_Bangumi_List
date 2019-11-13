@@ -3,7 +3,7 @@
 Plugin Name: Sinon的追番列表
 Plugin URI: https://sinon.top/sinon-bangumi-list/
 Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具-更新追番列表”菜单中配置追番列表。
-Version: 1.2.1
+Version: 1.2.2
 Author: Sinon
 Author URI: https://sinon.top/
 */
@@ -238,8 +238,8 @@ function Sinon_BL_generate_bangumi_option_page()
                 echo  '<select name="bg_status"><option value="0">待追番</option><option value=1 selected>正在追番</option>
                 <option value=2>已追完</option></select>';
                 echo  '看番进度：<input type="text" name="progress" value="' . esc_attr($this_bangumi['progress']) .
-                    '"style="width: 30px;">总集数：<input type="text" name="count" value="' . esc_attr($this_bangumi['count']) .
-                    '"style="width: 30px;">';
+                    '"style="width: 40px;text-align: center;">总集数：<input type="text" name="count" value="' . esc_attr($this_bangumi['count']) .
+                    '"style="width: 40px;text-align: center;">';
             } elseif ($this_bangumi['status'] == 2) { //已追完
                 if ($_GET['filter'] != NULL && $_GET['filter'] != 2) continue;
                 echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
@@ -494,7 +494,6 @@ function Sinon_BL_search_result()
 
 function Sinon_BL_edit()
 {
-    echo '<h2>编辑番剧信息</h2>';
     $id=$_POST['bangumi_id'];
     $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
     $bangumi_info=$saved_bangumi[$id];
@@ -504,6 +503,7 @@ function Sinon_BL_edit()
         Sinon_BL_generate_bangumi_option_page();
         return null;
     }
+    echo '<h2>编辑番剧信息</h2>';
     echo '<form action="" method="POST">' .
     '<input type="hidden" name="img" value="' . $bangumi_info['img'] . '"><input type="hidden" name="bangumi_id" value="' . $bangumi_info['id'] . '">' .
     '<input type="hidden" name="action" value="9">' .
