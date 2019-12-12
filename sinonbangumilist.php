@@ -3,7 +3,7 @@
 Plugin Name: Sinon的追番列表
 Plugin URI: https://sinon.top/sinon-bangumi-list/
 Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具-更新追番列表”菜单中配置追番列表。
-Version: 1.2.2
+Version: 1.2.3
 Author: Sinon
 Author URI: https://sinon.top/
 */
@@ -357,7 +357,7 @@ function Sinon_BL_update_bangumi_option()
     $change = $saved_bangumi[$id];
     if ($_POST['bg_status'] != NULL) {
         if (preg_match_all('/^[0-9]*$/', $_POST['bg_status']) == 0) {
-            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度id！</p></div>';
+            echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度状态！</p></div>';
             return false;
         }
         $change['status'] = (int) sanitize_text_field($_POST['bg_status']);
@@ -365,7 +365,7 @@ function Sinon_BL_update_bangumi_option()
     if ($_POST['progress'] == NULL) {
         $change['progress'] = 0;
     } else {
-        if (preg_match_all('/^[0-9]*$/', $_POST['progress']) == 0) {
+        if (preg_match_all('/^[0-9]*.*[0-9]*$/', $_POST['progress']) == 0) {
             echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度！</p></div>';
             return false;
         }

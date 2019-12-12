@@ -4,7 +4,7 @@ Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
 Tested up to: 5.3
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -18,7 +18,7 @@ Sinon的追番列表插件，安装插件后，使用短代码[bangumi]在页面
 也可以在番组计划的官网搜索番剧id(即对应的番剧页面url中的那串数字)，
 输入后插件会自动调用API获取番剧信息并保存。
 
-Development:https://github.com/SinonJZH/Sinon_Bangumi_List
+Development:[Github](https://github.com/SinonJZH/Sinon_Bangumi_List)
 
 ## 注意
 本插件使用了第三方api,api提供者为[bangumi 番组计划](http://bgm.tv/),api地址为：http://bgm.tv。
@@ -51,42 +51,36 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Changelog ==
 
+= 1.2.3 =
+* 允许输入小数格式的追番进度
+* 其他小修正
 = 1.2.2 =
-
 * 后台样式优化
 * 优化代码逻辑
-
 = 1.2.1 =
 * 添加了编辑番剧信息的功能
 * 获取番剧信息时，若中文名为空，自动将原名移至中文名一栏
-
 = 1.2.0 =
 * 添加了在插件内直接搜索番剧的功能
 * 添加了后台按状态筛选番剧的过滤器
-
 = 1.1.4 =
 * 在正在追番的番剧下添加“进度+1”按钮
 * 将后台菜单的番剧列表按照追番状态排序
 * 优化CSS样式
-
 = 1.1.3 =
 * 完成WordPress插件标准化，加强安全性。
-
 = 1.1.2 =
 * 根据WordPress插件规范对插件做出修改。
-
 = 1.1.1 =
 * 取消占位格子显示。
-
 = 1.1 =
 * 优化了后台菜单样式，添加了删除指定id的番剧以及删除所有番剧的功能。
-
 = 1.0 =
 * 提供基础的番剧列表生成和管理功能，后续会添加其他新的功能。
 
 == Upgrade Notice ==
 
-= 1.2.2 =
+= 1.2.3 =
 * **注意，如果修改了css文件，更新时请先备份修改**
 * 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
 
