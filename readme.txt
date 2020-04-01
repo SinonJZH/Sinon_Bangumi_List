@@ -3,8 +3,8 @@ Contributors: sinonjzh
 Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
-Tested up to: 5.3
-Stable tag: 1.2.3
+Tested up to: 5.4
+Stable tag: 1.2.4
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -51,6 +51,10 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Changelog ==
 
+= 1.2.4 =
+* 部分体验优化
+* 优化代码
+* 添加多周目功能
 = 1.2.3 =
 * 允许输入小数格式的追番进度
 * 其他小修正
@@ -80,7 +84,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Upgrade Notice ==
 
-= 1.2.3 =
+= 1.2.4 =
 * **注意，如果修改了css文件，更新时请先备份修改**
 * 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
 
