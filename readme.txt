@@ -4,7 +4,7 @@ Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
 Tested up to: 5.4
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -39,6 +39,10 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Frequently Asked Questions ==
 
+= 为什么番剧显示页面需要刷新才能正常显示？（对于启用了Ajax部分更新的站点） =
+插件采用在调用时才在head中引入css表的模式，由于部分更新不会更新head，所以无法正常加载css。
+解决方法：将插件文件中的css样式加入站点全局css中即可，也可以在使用短代码的页面中使用 ``<style>`` 标签添加。（css文件可通过插件编辑器查看）
+
 = 如何添加番剧？ =
 
 现在，只需要在插件内搜索番剧名称并添加就可以了。
@@ -51,6 +55,8 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Changelog ==
 
+= 1.2.5 =
+* 取消待追番状态番剧的周目显示
 = 1.2.4 =
 * 部分体验优化
 * 优化代码

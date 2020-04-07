@@ -3,7 +3,7 @@
 Plugin Name: Sinon的追番列表
 Plugin URI: https://sinon.top/sinon-bangumi-list/
 Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具-更新追番列表”菜单中配置追番列表。
-Version: 1.2.4
+Version: 1.2.5
 Author: Sinon
 Author URI: https://sinon.top/
 */
@@ -233,7 +233,7 @@ function Sinon_BL_generate_bangumi_option_page()
                     '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
                 <input type="hidden" name="bangumi_id" value="' . esc_attr($this_bangumi['id']) . '">';
-                echo '周目：<input type="text" name="times" value="' . ($this_bangumi['times'] ?: 1) .
+                echo '<input type="hidden" name="times" value="' . ($this_bangumi['times'] ?: 1) .
                     '"style="width: 40px;text-align: center;">';
                 echo  '<select name="bg_status"><option value="0" selected>待追番</option>
                 <option value=1>正在追番</option><option value=2>已追完</option></select>';
