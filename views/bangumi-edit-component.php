@@ -80,7 +80,7 @@ function edit_component_bangumi_search_result($keyword)
             <div class="action-links">
                 <ul class="plugin-action-buttons">
                     <li>
-                        <form>
+                        <form action="" method="POST">
                             <input name="action" value="add_by_id" type="hidden"/>
                             <input name="bangumi_keyword" value="<?php echo($results[$i]['id']); ?>" type="hidden"/>
                             <input value="<?php echo(_e("Add bangumi", "sinon-bangumi-list")); ?>" type="submit" class="install-now button"/>
