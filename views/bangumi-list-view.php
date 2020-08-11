@@ -1,23 +1,20 @@
+<?php require_once(ROOT_PATH."/functions/bangumi.php"); ?>
 <?php
     //Update Status
+    $id = (int)$_POST['id'];
     if ($_POST['action']=="update_status") {
-        //Load bangumi
-        $all_bangumi = get_option("sinonbangumilist_savedbangumi");
-        $bangumi = $all_bangumi[$_POST['id']];
         //Update
         if ((int)$_POST['bg_status']==1) {
             //if in Watching, update progress and times
             if ($_POST['progress']!=null) {
-                $bangumi['progress'] = (int)sanitize_text_field($_POST['progress']);
+                $progress = (int)sanitize_text_field($_POST['progress']);
             }
             if ($_POST['times']!=null) {
-                $bangumi['times'] = (int)sanitize_text_field($_POST['times']);
+                $times = (int)sanitize_text_field($_POST['times']);
             }
         }
-        $bangumi['status'] = (int)sanitize_text_field($_POST['bg_status']);
-        $all_bangumi[$_POST['id']] = $bangumi;
-        echo(var_dump($all_bangumi));
-        update_option("sinonbangumilist_savedbangumi", $all_bangumi);
+        $status = (int)sanitize_text_field($_POST['bg_status']);
+        bangumi:: update_bangumi_status($id, $status, $times, $progress);
     }
 ?>
 <div class="wrap">

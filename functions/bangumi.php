@@ -8,8 +8,7 @@ class bangumi
         if ($all_bangumi==null) {
             return;
         }
-        if($all_bangumi[$id]!=null)
-        {
+        if ($all_bangumi[$id]!=null) {
             unset($all_bangumi[$id]);
         }
         return update_option("sinonbangumilist_savedbangumi", $all_bangumi);
@@ -22,6 +21,25 @@ class bangumi
             $bangumi = $all_bangumi[$id];
         }
         return $bangumi;
+    }
+
+    public static function update_bangumi_status($id, $status, $times, $progress)
+    {
+        $all_bangumi = get_option("sinonbangumilist_savedbangumi");
+        if ($all_bangumi==null) {
+            $all_bangumi=[];
+        }
+        $bangumi = $all_bangumi[$id];
+        $bangumi['status']=$status;
+        if ($times!=null) {
+            $bangumi['times']=$times;
+        }
+        if ($progress!=null) {
+            $bangumi['progress']=$progress;
+        }
+        
+        $all_bangumi[$id]=$bangumi;
+        return update_option("sinonbangumilist_savedbangumi", $all_bangumi);
     }
 
     public static function add_or_update_bangumi($id, $url, $img, $name, $name_cn, $date, $count, $title)
