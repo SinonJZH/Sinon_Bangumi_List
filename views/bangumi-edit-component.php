@@ -85,9 +85,9 @@ function edit_conponent_bangumi_edit_box($bangumi)
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="orginal_name"><?php _e("Original Name", "sinon-bangumi-list"); ?></label></th>
+                <th scope="row"><label for="original_name"><?php _e("Original Name", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <input name="orginal_name" type="text" class="regular-text" value="<?php echo($bangumi['name']); ?>"/>
+                    <input name="original_name" type="text" class="regular-text" value="<?php echo($bangumi['name']); ?>"/>
                 </td>
             </tr>
             <tr>
