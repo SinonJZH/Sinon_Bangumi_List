@@ -1,5 +1,6 @@
 
 <?php require_once(ROOT_PATH."/functions/bangumi-tv-api.php"); ?>
+<?php require_once(ROOT_PATH."/functions/bangumi.php");?>
 <div class="wrap">
     <h1 class="wp-heading-inline">
     <?php
@@ -14,6 +15,36 @@
         //If in step1, show bangumi search box
         if ($_POST['action']==null) {
             edit_component_bangumi_search_box();
+        } elseif ($_POST['action']=="do_edit") {
+            $id = (int)$_POST['bangumi_id'];
+            $url = sanitize_text_field($_POST['bangumi_url']);
+            $img = sanitize_text_field($_POST['image_url']);
+            $name = sanitize_text_field($_POST['original_name']);
+            $name_cn = sanitize_text_field($_POST['translated_name']);
+            $date = sanitize_text_field($_POST['air_date']);
+            $count = (int)sanitize_text_field($_POST['episode_count']);
+            $title = sanitize_text_field($_POST['summary']);
+            $result = bangumi::add_or_update_bangumi($id, $url, $img, $name, $name_cn, $date, $count, $title);
+            
+            if ($result==true) {
+                ?>
+<div id="message" class="updated notice notice-success is-dismissible">
+    <p><?php echo(_e("Bangumi info saved", "sinon-bangumi-list")); ?></p>
+    <button type="button" class="notice-dismiss">
+        <span class="screen-reader-text">Dismiss this notice.</span>
+    </button>
+</div>
+<?php
+            } else {
+                ?>
+<div id="message" class="updated notice notice-error is-dismissible">
+    <p><?php echo(_e("Failed to save bangumi info", "sinon-bangumi-list")); ?></p>
+    <button type="button" class="notice-dismiss">
+        <span class="screen-reader-text">Dismiss this notice.</span>
+    </button>
+</div>
+<?php
+            }
         } elseif ($_POST['action']=="search_by_keyword") {
             //If in step1.5, show bangumi search result
             edit_component_bangumi_search_result($_POST['bangumi_keyword']);
@@ -37,51 +68,54 @@ function edit_conponent_bangumi_edit_box($bangumi)
     ?>
 <form action="" method="POST">
     <table class="form-table">
+        <input name="action" value="do_edit" type="hidden"/>
+        <input name="bangumi_id" value="<?php echo($bangumi['id']); ?>" type="hidden"/>
         <tbody>
             <tr>
                 <th scope="row"><label for="image_url"><?php _e("Image URL", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <input name="image_url" type="text" class="regular-text"/>
+                    <input name="image_url" type="text" class="regular-text" value="<?php echo($bangumi['img']); ?>"/>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="bangumi_url"><?php _e("Bangumi URL", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <input name="bangumi_url" type="text" class="regular-text"/>
+                    <input name="bangumi_url" type="text" class="regular-text" value="<?php echo($bangumi['url']); ?>"/>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="orginal_name"><?php _e("Original Name", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <input name="orginal_name" type="text" class="regular-text"/>
+                    <input name="orginal_name" type="text" class="regular-text" value="<?php echo($bangumi['name']); ?>"/>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="translated_name"><?php _e("Translated Name", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <input name="translated_name" type="text" class="regular-text"/>
+                    <input name="translated_name" type="text" class="regular-text" value="<?php echo($bangumi['name_cn']); ?>"/>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="air_date"><?php _e("Air Date", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <input name="air_date" type="text" class="regular-text"/>
+                    <input name="air_date" type="text" class="regular-text" value="<?php echo($bangumi['date']); ?>"/>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="episode_count"><?php _e("Episode Count", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <input name="episode_count" type="number" class="regular-text"/>
+                    <input name="episode_count" type="number" class="regular-text" value="<?php echo($bangumi['count']); ?>"/>
                 </td>
             </tr>
             <tr>
                 <th scope="row"><label for="summary"><?php _e("Summary", "sinon-bangumi-list"); ?></label></th>
                 <td>
-                    <textarea name="summary" style="width:50%;height:300px;"></textarea>
+                    <textarea name="summary" style="width:50%;height:300px;"><?php echo($bangumi['title']); ?></textarea>
                 </td>
             </tr>                                                            
         </tbody>
     </table>
+    <?php submit_button(); ?>
 </form>
 <?php
 }
