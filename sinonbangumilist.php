@@ -1,12 +1,5 @@
 <?php
-/*
-Plugin Name: Sinon的追番列表
-Plugin URI: https://sinon.top/sinon-bangumi-list/
-Description: 使用短代码[bangumi]在页面上生成追番列表，在“工具-更新追番列表”菜单中配置追番列表。
-Version: 1.2.5
-Author: Sinon
-Author URI: https://sinon.top/
-*/
+
 
 
 //主要功能：在短代码[bangumi]处生成追番列表
@@ -84,7 +77,8 @@ function Sinon_BL_get_bangumi_item($id)
 {
     $URL = "http://api.bgm.tv/subject/" . (string) $id . "?responseGroup=Small";
     $request = wp_remote_get($URL);
-    $response = wp_remote_retrieve_body($request);;
+    $response = wp_remote_retrieve_body($request);
+    ;
     $bg_json = json_decode($response, true);
     $date = explode('-', $bg_json['air_date']);
     $date[1] = ltrim($date[1], '0');
@@ -146,7 +140,7 @@ function Sinon_BL_sinon_bangumi_options()
     if (!current_user_can('edit_posts')) {
         wp_die(__('权限不足，无法操作！'));
     }
-    if ($_POST['action'] == NULL) { //默认界面
+    if ($_POST['action'] == null) { //默认界面
         Sinon_BL_generate_bangumi_option_page();
     } elseif ($_POST['action'] == 1 && wp_verify_nonce($_POST['nonce'], "Sinon_Bangumi_Action_1")) { //添加番剧（确认）
         Sinon_BL_generate_confirm_page();
@@ -213,22 +207,32 @@ function Sinon_BL_generate_bangumi_option_page()
     $search_nonce = wp_create_nonce('Sinon_Bangumi_Action_7');
     $edit_nonce = wp_create_nonce('Sinon_Bangumi_Action_8');
     echo '过滤器：<form action="" method="GET"><select name="filter"><option value=""';
-    if ($_GET['filter'] == NULL) echo 'selected';
+    if ($_GET['filter'] == null) {
+        echo 'selected';
+    }
     echo '>全部</option><option value="0"';
-    if ($_GET['filter'] === '0') echo 'selected';
+    if ($_GET['filter'] === '0') {
+        echo 'selected';
+    }
     echo '>待追番</option><option value="1"';
-    if ($_GET['filter'] == 1) echo 'selected';
+    if ($_GET['filter'] == 1) {
+        echo 'selected';
+    }
     echo '>正在追番</option><option value="2"';
-    if ($_GET['filter'] == 2) echo 'selected';
+    if ($_GET['filter'] == 2) {
+        echo 'selected';
+    }
     echo '>已追完</option></select><input type="hidden" name="page" value="sinon_bangumi_list"><input type="submit" class="button button-primary" value="应用"></form>';
-    if ($saved_bangumi == NULL) {
+    if ($saved_bangumi == null) {
         echo "看来你还没有添加过番剧呢，要添加一个吗？<br>";
     } else {
         echo '<table style="line-height: 50px;text-align: center;">' .
             '<tr><td style="width:300px">番剧名称</td><td style="width:450px">番剧状态</td><td>编辑</td><td>删除</td></tr>';
         foreach ($saved_bangumi as $this_bangumi) {
             if ($this_bangumi['status'] == 0) { //待追番
-                if ($_GET['filter'] != NULL && $_GET['filter'] != 0) continue;
+                if ($_GET['filter'] != null && $_GET['filter'] != 0) {
+                    continue;
+                }
                 echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
                     '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
@@ -238,7 +242,9 @@ function Sinon_BL_generate_bangumi_option_page()
                 echo  '<select name="bg_status"><option value="0" selected>待追番</option>
                 <option value=1>正在追番</option><option value=2>已追完</option></select>';
             } elseif ($this_bangumi['status'] == 1) { //正在追番
-                if ($_GET['filter'] != NULL && $_GET['filter'] != 1) continue;
+                if ($_GET['filter'] != null && $_GET['filter'] != 1) {
+                    continue;
+                }
                 echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
                     '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
@@ -251,7 +257,9 @@ function Sinon_BL_generate_bangumi_option_page()
                     '"style="width: 40px;text-align: center;">总集数：<input type="text" name="count" value="' . esc_attr($this_bangumi['count']) .
                     '"style="width: 40px;text-align: center;">';
             } elseif ($this_bangumi['status'] == 2) { //已追完
-                if ($_GET['filter'] != NULL && $_GET['filter'] != 2) continue;
+                if ($_GET['filter'] != null && $_GET['filter'] != 2) {
+                    continue;
+                }
                 echo '<tr><td>' . esc_attr($this_bangumi['name_cn']) . '</td><td>' .
                     '<form action="" method="POST"><input type="hidden" name="action" value="2">
                 <input type="hidden" name="nonce" value="' . esc_attr($change_nonce) . '">
@@ -305,7 +313,7 @@ function Sinon_BL_generate_confirm_page()
     if (preg_match_all('/^[1-9][0-9]*$/', $_POST['bangumi_id']) == 0) {
         echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的番剧id！</p></div>';
         Sinon_BL_generate_bangumi_option_page();
-        return NULL;
+        return null;
     }
     $id = (int) $_POST['bangumi_id'];
     $add = Sinon_BL_get_bangumi_item($id);
@@ -342,7 +350,7 @@ function Sinon_BL_generate_del_confirm_page()
         }
         $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
         $id = (int) sanitize_text_field($_POST['bangumi_id']);
-        if ($saved_bangumi[$id] == NULL) {
+        if ($saved_bangumi[$id] == null) {
             echo '<div id="message" class="updated fade"><p>番剧不存在！</p></div>';
             Sinon_BL_generate_bangumi_option_page();
         } else {
@@ -368,14 +376,14 @@ function Sinon_BL_update_bangumi_option()
     }
     $id = (int) $_POST['bangumi_id'];
     $change = $saved_bangumi[$id];
-    if ($_POST['bg_status'] != NULL) {
+    if ($_POST['bg_status'] != null) {
         if (preg_match_all('/^[0-9]*$/', $_POST['bg_status']) == 0) {
             echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的进度状态！</p></div>';
             return false;
         }
         $change['status'] = (int) sanitize_text_field($_POST['bg_status']);
     }
-    if ($_POST['progress'] == NULL) {
+    if ($_POST['progress'] == null) {
         $change['progress'] = 0;
     } else {
         if (preg_match_all('/^[0-9]*.*[0-9]*$/', $_POST['progress']) == 0) {
@@ -384,14 +392,14 @@ function Sinon_BL_update_bangumi_option()
         }
         $change['progress'] = sanitize_text_field($_POST['progress']);
     }
-    if ($_POST['count'] != NULL) {
+    if ($_POST['count'] != null) {
         if (preg_match_all('/^[0-9]*$/', $_POST['count']) == 0) {
             echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的总集数！</p></div>';
             return false;
         }
         $change['count'] = sanitize_text_field($_POST['count']);
     }
-    if ($_POST['times'] != NULL) {
+    if ($_POST['times'] != null) {
         if (preg_match_all('/^[1-9][0-9]*$/', $_POST['times']) == 0) {
             echo '<div id="message" class="notice inline notice-error  is-dismissible"><p>错误！非法的周目数！</p></div>';
             return false;
@@ -462,12 +470,20 @@ function Sinon_BL_sort_cmp($a, $b)
     if ($a['status'] == 1 && $b['status'] == 1) {
         return $a['progress'] < $b['progress'];
     }
-    if ($a['status'] == 1) $c = 1;
-    elseif ($a['status'] == 0) $c = 2;
-    else $c = 3;
-    if ($b['status'] == 1) $d = 1;
-    elseif ($b['status'] == 0) $d = 2;
-    else $d = 3;
+    if ($a['status'] == 1) {
+        $c = 1;
+    } elseif ($a['status'] == 0) {
+        $c = 2;
+    } else {
+        $c = 3;
+    }
+    if ($b['status'] == 1) {
+        $d = 1;
+    } elseif ($b['status'] == 0) {
+        $d = 2;
+    } else {
+        $d = 3;
+    }
     return $c > $d;
 }
 
@@ -476,10 +492,11 @@ function Sinon_BL_search($keyword)
 {
     $URL = "http://api.bgm.tv/search/subject/:" . urlencode($keyword) . "?type=2&responseGroup=Large&max_results=10";
     $request = wp_remote_get($URL);
-    $response = wp_remote_retrieve_body($request);;
+    $response = wp_remote_retrieve_body($request);
+    ;
     $bg_json = json_decode($response, true);
     for ($i = 0; $i < 10; $i++) {
-        if ($bg_json['list'][$i]['id'] == NULL) {
+        if ($bg_json['list'][$i]['id'] == null) {
             break;
         }
         $result['result'] = $i;
