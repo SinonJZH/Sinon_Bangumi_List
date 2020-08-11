@@ -2,6 +2,16 @@
 
 class bangumi
 {
+    public static function get_bangumi_by_id($id)
+    {
+        $bangumi=[];
+        $all_bangumi = get_option("sinonbangumilist_savedbangumi");
+        if ($all_bangumi!=null) {
+            $bangumi = $all_bangumi[$id];
+        }
+        return $bangumi;
+    }
+
     public static function add_or_update_bangumi($id, $url, $img, $name, $name_cn, $date, $count, $title)
     {
         $all_bangumi = get_option("sinonbangumilist_savedbangumi");

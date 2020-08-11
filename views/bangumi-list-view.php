@@ -43,10 +43,10 @@
                     <strong><a class="row-title"><?php echo($bangumi["name_cn"]) ?></a></strong>
                     <div class="row-actions">
                             <span class="edit">
-                                <a href="<?php echo(admin_url()."admin.php?page=sinon_bangumi_new&bangumi_id=".$bangumi["id"]); ?>"><?php _e("Edit", "sinon-bangumi-list"); ?></a> | 
+                                <a href="<?php echo(admin_url()."admin.php?page=sinon_bangumi_edit&bangumi_id=".$bangumi["id"]); ?>"><?php _e("Edit", "sinon-bangumi-list"); ?></a> | 
                             </span>
                             <span class="delete">
-                                <a href="<?php echo(admin_url()."admin.php?page=sinon_bangumi_new&bangumi_id=".$bangumi["id"]."&action=delete"); ?>"><?php _e("Delete", "sinon-bangumi-list"); ?></a>
+                                <a href="<?php echo(admin_url()."admin.php?page=sinon_bangumi_edit&bangumi_id=".$bangumi["id"]."&action=delete"); ?>"><?php _e("Delete", "sinon-bangumi-list"); ?></a>
                             </span>
                     </div>
                 </th>

@@ -12,8 +12,12 @@
     ?>
     </h1>
     <?php
-        //If in step1, show bangumi search box
-        if ($_POST['action']==null) {
+
+        if ($bangumi!=null && $_POST['action']!="do_edit") {
+            //show bangumi info editing box(filled with data from database)
+            edit_conponent_bangumi_edit_box($bangumi);
+        } elseif ($_POST['action']==null) {
+            //If in step1, show bangumi search box
             edit_component_bangumi_search_box();
         } elseif ($_POST['action']=="do_edit") {
             $id = (int)$_POST['bangumi_id'];
@@ -51,9 +55,6 @@
         } elseif ($_POST['action']=='add_by_id') {
             //If in step2, show bangumi info editing box (blank)
             $bangumi = bangumi_tv_api::get_bangumi_info($_POST['bangumi_id']);
-            edit_conponent_bangumi_edit_box($bangumi);
-        } elseif ($bangumi!=null) {
-            //show bangumi info editing box(filled with data from database)
             edit_conponent_bangumi_edit_box($bangumi);
         }
     
@@ -174,7 +175,7 @@ function edit_component_bangumi_search_result($keyword)
                     <li>
                         <form action="" method="POST">
                             <input name="action" value="add_by_id" type="hidden"/>
-                            <input name="bangumi_keyword" value="<?php echo($results[$i]['id']); ?>" type="hidden"/>
+                            <input name="bangumi_id" value="<?php echo($results[$i]['id']); ?>" type="hidden"/>
                             <input value="<?php echo(_e("Add bangumi", "sinon-bangumi-list")); ?>" type="submit" class="install-now button"/>
                         </form>
                     </li>
