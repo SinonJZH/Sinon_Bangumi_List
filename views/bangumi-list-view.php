@@ -77,5 +77,11 @@
                 }
             ?>
         </tbody>
+        <tfoot>
+            <tr>              
+                <th scope="col" class="manage-column column-primary"><?php _e("Bangumi Name", "sinon-bangumi-list"); ?></th>
+                <th scope="col"><?php _e("Status", "sinon-bangumi-list"); ?></th>
+            </tr>
+        </tfoot>
     </table>
 </div>
