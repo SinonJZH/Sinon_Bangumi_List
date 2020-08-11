@@ -2,6 +2,18 @@
 
 class bangumi
 {
+    public static function delete_bangumi_from_id($id)
+    {
+        $all_bangumi = get_option("sinonbangumilist_savedbangumi");
+        if ($all_bangumi==null) {
+            return;
+        }
+        if($all_bangumi[$id]!=null)
+        {
+            unset($all_bangumi[$id]);
+        }
+        return update_option("sinonbangumilist_savedbangumi", $all_bangumi);
+    }
     public static function get_bangumi_by_id($id)
     {
         $bangumi=[];
