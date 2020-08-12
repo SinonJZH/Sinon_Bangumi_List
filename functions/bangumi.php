@@ -36,6 +36,9 @@ class bangumi
         }
         if ($progress!=null) {
             $bangumi['progress']=$progress;
+            if ($progress>(int)$bangumi['count']) {
+                return false;
+            }
         }
         
         $all_bangumi[$id]=$bangumi;

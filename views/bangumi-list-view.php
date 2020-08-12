@@ -1,4 +1,5 @@
 <?php require_once(ROOT_PATH."/functions/bangumi.php"); ?>
+<?php require_once(ROOT_PATH."/views/view-helper.php");?>
 <?php
     //Update Status
     $id = (int)$_POST['id'];
@@ -6,15 +7,25 @@
         //Update
         if ((int)$_POST['bg_status']==1) {
             //if in Watching, update progress and times
-            if ($_POST['progress']!=null) {
+            if ($_POST['progress']!=null && is_numeric($_POST['progress'])) {
                 $progress = (int)sanitize_text_field($_POST['progress']);
+            } else {
+                show_dismissible_notice(__("Invalid progress set", "sinon-bangumi-list"), "error");
             }
-            if ($_POST['times']!=null) {
+
+            if ($_POST['times']!=null&& is_numeric($_POST['times'])) {
                 $times = (int)sanitize_text_field($_POST['times']);
+            } else {
+                show_dismissible_notice(__("Invalid times set", "sinon-bangumi-list"), "error");
             }
         }
         $status = (int)sanitize_text_field($_POST['bg_status']);
-        bangumi:: update_bangumi_status($id, $status, $times, $progress);
+        $result = bangumi:: update_bangumi_status($id, $status, $times, $progress);
+        if ($result==true) {
+            show_dismissible_notice(__("Bangumi $id status updated", "sinon-bangumi-list"), "success");
+        } else {
+            show_dismissible_notice(__("Failed to update status, maybe progress is larger than episode count.", "sinon-bangumi-list"), "error");
+        }
     }
 ?>
 <div class="wrap">
