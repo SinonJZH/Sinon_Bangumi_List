@@ -1,6 +1,6 @@
 <?php
 //Insert css
-$css_url = esc_url(plugins_url('../css/style.css', __FILE__));
+$css_url = esc_url(plugins_url('../css/style-comment.css', __FILE__));
 wp_enqueue_style('Sinon_Bangumi_Item', $css_url);
 //Group bangumi
 $all_bangumi = get_option("sinonbangumilist_savedbangumi");
@@ -54,20 +54,33 @@ function render_bangumi_item($bangumi)
     ?>
     <div class="bangumi-item">
         <div class="bangumi-summary">
-            <p>进入21世纪已有近20年，在人们已忘记了妖怪存在的现代。 科学无法解明的现象频发，流言飞语散布各处，大人们只能疲于奔命。 希望想办法解决这一情况而写信给妖怪信箱的13岁少女·真奈的面前， 随着咔哒咔哒的木屐响声，鬼太郎来到了…。</p>
+            <p><?php echo(esc_attr($bangumi['title'])); ?></p>
         </div>
         <div class="bangumi-info">
-            <img class="bangumi-img" src="https://lain.bgm.tv/pic/cover/l/30/71/234531_u3ujU.jpg">
+            <img class="bangumi-img" src="<?php echo(esc_url($bangumi['img'])); ?>">
             <div class="bangumi-detail">
-                <strong>鬼太郎 第六季</strong>
-                <span>ゲゲゲの鬼太郎</span>
+                <a class="bangumi-name-cn"><?php echo(esc_attr($bangumi['name_cn'])); ?></a>
+                <span class="bangumi-name"><?php echo(esc_attr($bangumi['name'])); ?></span>
                 <br/>
-                <span>首播日期：2018年4月1日</span>
+                <span><?php _e("Air Date:","sinon-bangumi-list"); ?><?php echo(esc_attr($bangumi['date'])); ?></span>
                 <div class="progress-background">
                     <div class="progress-text">
-                        进度
+                    <?php
+    $percent = 100;
+    if ($bangumi['status']==0) {
+        echo(__("Watched:", "sinon-bangumi-list")."0/".esc_attr($bangumi['count']));
+        $percent = 0;
+    } elseif ($bangumi['status']==2) {
+        echo(__("Watched", "sinon-bangumi-list"));
+        $percent = 100;
+    } else {
+        $label_progress = esc_attr($bangumi['times'] != null && $bangumi['times'] > 1 ? ($bangumi['times'].__(" times:", "sinon-bangumi-list")) : __("Watched:", "sinon-bangumi-list"));
+        $label_progress = $label_progress.esc_attr($bangumi['progress']).'/'. esc_attr($bangumi['count']);
+        echo($label_progress);
+        $percent=(float) $bangumi['progress'] / $bangumi['count'] * 100;
+    } ?>
                     </div>
-                    <div class="progress-foreground" style="width:50%;">
+                    <div class="progress-foreground" style="width:<?php echo(esc_attr($percent)); ?>%;">
                     </div>
                 </div>
             </div>

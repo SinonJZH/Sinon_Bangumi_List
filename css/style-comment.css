@@ -1,0 +1,95 @@
+div.bangumi-item{
+  line-height: 20px;
+  white-space: nowrap;
+  box-shadow: 0px 0px 5px grey;
+  margin: 1.5%;
+  float: left;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+}
+
+div.bangumi-info{
+  height: 88px;
+  display: flex;
+  box-shadow: 0 0 15px -8px rgba(0, 0, 0, .5)
+}
+
+div.bangumi-detail{
+  width: 100%;
+  padding: 10px;
+}
+
+div.bangumi-detail .bangumi-name-cn{
+  font-size: 20px;
+  text-decoration: underline dotted rgba(0, 0, 0, .1);
+}
+div.bangumi-detail .bangumi-name{
+  font-size: 15px;
+  color: gray;
+  margin-left: 5px;
+  text-decoration: underline dotted rgba(0, 0, 0, .1);
+}
+
+div.bangumi-summary{
+  white-space: normal;
+  line-height: initial;
+}
+
+div.bangumi-summary p{
+  margin: 10px;
+}
+
+img.bangumi-img{
+  height: 88px;
+  padding-right: 10px;
+}
+
+div.progress-background {
+  height: 18px;
+  width: 100%;
+  background-color: gray;
+  border-radius: 4px;
+  margin-top:5px;
+}
+
+div.progress-foreground {
+  height: 18px;
+  background-color: #3aee85;
+  border-radius: 4px;
+  bottom: 0px;
+  z-index: 1;
+  -webkit-animation: jdanimi 2s ease-out forwards;
+  -moz-animation: jdanimi 2s ease-out forwards;
+  -o-animation: jdanimi 2s ease-out forwards;
+  -ms-animation: jdanimi 2s ease-out forwards;
+  animation: jdanimi 2s ease-out forwards;
+}
+
+div.progress-text {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  color: rgb(49, 30, 214);
+  line-height: 15px;
+  font-size: 15px;
+  float: left;
+  margin-top:1px;
+  z-index: 2;
+}
+
+
+@media screen and (max-width:1000px) {
+  a.bangumi-item {
+    width: 95%;
+  }
+}
+
+@keyframes jdanimi {
+  0% {
+    width: 0%;
+  }
+
+  100% {}
+}
