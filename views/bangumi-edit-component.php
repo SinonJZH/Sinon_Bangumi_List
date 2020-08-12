@@ -1,6 +1,7 @@
 
 <?php require_once(ROOT_PATH."/functions/bangumi-tv-api.php"); ?>
 <?php require_once(ROOT_PATH."/functions/bangumi.php");?>
+<?php require_once(ROOT_PATH."/views/view-helper.php");?>
 <div class="wrap">
     <h1 class="wp-heading-inline">
     <?php
@@ -13,11 +14,11 @@
     </h1>
     <?php
 
+        //challenge data status
+
         if ($bangumi!=null && $_POST['action']!="do_edit") {
-            //show bangumi info editing box(filled with data from database)
             edit_conponent_bangumi_edit_box($bangumi);
         } elseif ($_POST['action']==null) {
-            //If in step1, show bangumi search box
             edit_component_bangumi_search_box();
         } elseif ($_POST['action']=="do_edit") {
             $id = (int)$_POST['bangumi_id'];
@@ -29,31 +30,14 @@
             $count = (int)sanitize_text_field($_POST['episode_count']);
             $title = sanitize_text_field($_POST['summary']);
             $result = bangumi::add_or_update_bangumi($id, $url, $img, $name, $name_cn, $date, $count, $title);
-            
             if ($result==true) {
-                ?>
-<div id="message" class="updated notice notice-success is-dismissible">
-    <p><?php echo(_e("Bangumi info saved", "sinon-bangumi-list")); ?></p>
-    <button type="button" class="notice-dismiss">
-        <span class="screen-reader-text">Dismiss this notice.</span>
-    </button>
-</div>
-<?php
+                show_dismissible_notice(__("Bangumi info saved", "sinon-bangumi-list"), "success");
             } else {
-                ?>
-<div id="message" class="updated notice notice-error is-dismissible">
-    <p><?php echo(_e("Failed to save bangumi info", "sinon-bangumi-list")); ?></p>
-    <button type="button" class="notice-dismiss">
-        <span class="screen-reader-text">Dismiss this notice.</span>
-    </button>
-</div>
-<?php
+                show_dismissible_notice(__("Failed to save bangumi info", "sinon-bangumi-list"), "error");
             }
         } elseif ($_POST['action']=="search_by_keyword") {
-            //If in step1.5, show bangumi search result
             edit_component_bangumi_search_result($_POST['bangumi_keyword']);
         } elseif ($_POST['action']=='add_by_id') {
-            //If in step2, show bangumi info editing box (blank)
             $bangumi = bangumi_tv_api::get_bangumi_info($_POST['bangumi_id']);
             edit_conponent_bangumi_edit_box($bangumi);
         }
