@@ -10,3 +10,20 @@ function show_dismissible_notice($content, $flag)
 </div>
     <?php
 }
+
+function redirect_to_admin_url($url, $delay)
+{
+    if ($url!=null) {
+        if ($delay!=null) {
+            echo("<script>window.setTimeout(function(){window.location='".admin_url()."$url';},$delay)</script>");
+        } else {
+            echo("<script>window.location='".admin_url()."$url'</script>");
+        }
+    } else {
+        if ($delay!=null) {
+            echo("<script>window.setTimeout(function(){window.location.reload(true);},$delay)</script>");
+        } else {
+            echo("<script>window.location.reload(true);</script>");
+        }
+    }
+}

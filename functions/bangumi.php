@@ -79,15 +79,13 @@ class bangumi
             $bangumi['title']=$title;
         }
         $all_bangumi[$id]=$bangumi;
-
         if ($old_bangumi!=null) {
             //check if not change
-            $diff_count = count(array_diff($old_bangumi, $bangumi)) + count(array_diff_key($old_bangumi, $bangumi));
-            if ($diff_count==0) {
+            if ($old_bangumi == $bangumi) {
                 return true;
             }
         }
-        
+
         return update_option("sinonbangumilist_savedbangumi", $all_bangumi);
     }
 }

@@ -31,6 +31,7 @@
                 $count = (int)sanitize_text_field($_POST['episode_count']);
             } else {
                 show_dismissible_notice(__("Invalid episode count", "sinon-bangumi-list"), "error");
+                redirect_to_admin_url(null, 3000);
                 return;
             }
             $title = sanitize_text_field($_POST['summary']);
@@ -40,13 +41,14 @@
             } else {
                 show_dismissible_notice(__("Failed to save bangumi info", "sinon-bangumi-list"), "error");
             }
+            redirect_to_admin_url("admin.php?page=sinon_bangumi_list", 3000);
         } elseif ($_POST['action']=="search_by_keyword") {
             edit_component_bangumi_search_result($_POST['bangumi_keyword']);
         } elseif ($_POST['action']=='add_by_id') {
             $bangumi = bangumi_tv_api::get_bangumi_info($_POST['bangumi_id']);
             edit_conponent_bangumi_edit_box($bangumi);
         }
-    
+        
     ?>
 
 </div>
