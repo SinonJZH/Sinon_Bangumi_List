@@ -1,6 +1,11 @@
 <?php
 //Insert css
-$css_url = esc_url(plugins_url('../css/style-comment.css', __FILE__));
+$display_mode = get_option("sinonbangumilist_displaymode");
+if ($display_mode=="comment") {
+    $css_url = esc_url(plugins_url('../css/style-comment.css', __FILE__));
+} else {
+    $css_url = esc_url(plugins_url('../css/style-list.css', __FILE__));
+}
 wp_enqueue_style('Sinon_Bangumi_Item', $css_url);
 //Group bangumi
 $all_bangumi = get_option("sinonbangumilist_savedbangumi");
@@ -24,7 +29,11 @@ foreach ($all_bangumi as $a) {
     for ($i = 0; $i < $watch_count; $i++) {
         $id = $index[1][$i];
         $bangumi = $all_bangumi[$id];
-        render_bangumi_item($bangumi);
+        if ($display_mode=="comment") {
+            render_bangumi_item_comment($bangumi);
+        } else {
+            render_bangumi_item_list($bangumi);
+        }
     }
 ?>
 
@@ -34,7 +43,11 @@ foreach ($all_bangumi as $a) {
     for ($i = 0; $i < $finish_count; $i++) {
         $id = $index[2][$i];
         $bangumi = $all_bangumi[$id];
-        render_bangumi_item($bangumi);
+        if ($display_mode=="comment") {
+            render_bangumi_item_comment($bangumi);
+        } else {
+            render_bangumi_item_list($bangumi);
+        }
     }
 ?>
 
@@ -44,12 +57,16 @@ foreach ($all_bangumi as $a) {
     for ($i = 0; $i < $ready_count; $i++) {
         $id = $index[0][$i];
         $bangumi = $all_bangumi[$id];
-        render_bangumi_item($bangumi);
+        if ($display_mode=="comment") {
+            render_bangumi_item_comment($bangumi);
+        } else {
+            render_bangumi_item_list($bangumi);
+        }
     }
 ?>
 
 <?php
-function render_bangumi_item($bangumi)
+function render_bangumi_item_comment($bangumi)
 {
     ?>
     <div class="bangumi-item">
@@ -59,10 +76,10 @@ function render_bangumi_item($bangumi)
         <div class="bangumi-info">
             <img class="bangumi-img" src="<?php echo(esc_url($bangumi['img'])); ?>">
             <div class="bangumi-detail">
-                <a class="bangumi-name-cn"><?php echo(esc_attr($bangumi['name_cn'])); ?></a>
+                <a href="<?php echo(esc_url($bangumi['url'])); ?>" class="bangumi-name-cn"><?php echo(esc_attr($bangumi['name_cn'])); ?></a>
                 <span class="bangumi-name"><?php echo(esc_attr($bangumi['name'])); ?></span>
                 <br/>
-                <span><?php _e("Air Date:","sinon-bangumi-list"); ?><?php echo(esc_attr($bangumi['date'])); ?></span>
+                <span><?php _e("Air Date:", "sinon-bangumi-list"); ?><?php echo(esc_attr($bangumi['date'])); ?></span>
                 <div class="progress-background">
                     <div class="progress-text">
                     <?php
@@ -90,7 +107,7 @@ function render_bangumi_item($bangumi)
     <?php
 }
 
-function render_bangumi_item2($bangumi)
+function render_bangumi_item_list($bangumi)
 {
     ?>
     

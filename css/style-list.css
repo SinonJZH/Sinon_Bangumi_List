@@ -2,20 +2,17 @@
 a.bangumi-item {
     line-height: 20px;
     white-space: nowrap;
-    box-shadow: 0px 0px 5px black;
+    box-shadow: 0px 0px 5px grey;
     width: 46%;
     margin: 1.5%;
     float: left;
     overflow: hidden;
     display: block;
     height: 88px;
-    color: aqua;
-    border: 1px solid;
     border-radius: 10px;
   }
   
   a.bangumi-item:hover {
-    color: aqua;
     opacity: 0.8;
     filter: saturate(150%);
     -webkit-filter: saturate(150%);
