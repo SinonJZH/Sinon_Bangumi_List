@@ -21,4 +21,9 @@ class view_controller
     {
         include_once(ROOT_PATH."/views/bangumi-edit-view.php");
     }
+
+    public static function bangumi_render()
+    {
+        include_once(ROOT_PATH."/views/bangumi-generator-view.php");
+    }
 }

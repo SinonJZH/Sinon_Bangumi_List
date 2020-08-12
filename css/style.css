@@ -1,4 +1,4 @@
-a.bangumItem {
+a.bangumi-item {
   line-height: 20px;
   white-space: nowrap;
   box-shadow: 0px 0px 5px black;
@@ -13,7 +13,7 @@ a.bangumItem {
   border-radius: 10px;
 }
 
-a.bangumItem:hover {
+a.bangumi-item:hover {
   color: aqua;
   opacity: 0.8;
   filter: saturate(150%);
@@ -23,13 +23,13 @@ a.bangumItem:hover {
   -ms-filter: saturate(150%);
 }
 
-a.bangumItem img {
+a.bangumi-item img {
   height: 88px;
   float: left;
   padding-right: 5px;
 }
 
-a.bangumItem .textBox {
+a.bangumi-item .textbox {
   text-overflow: ellipsis;
   overflow: hidden;
   position: relative;
@@ -38,7 +38,7 @@ a.bangumItem .textBox {
   margin: 5px;
 }
 
-a.bangumItem div.jinduBG {
+a.bangumi-item div.progress-background {
   height: 18px;
   width: 100%;
   background-color: gray;
@@ -48,7 +48,7 @@ a.bangumItem div.jinduBG {
   bottom: 3px;
 }
 
-a.bangumItem div.jinduFG {
+a.bangumi-item div.progress-foreground {
   height: 18px;
   background-color: #3aee85;
   border-radius: 4px;
@@ -62,7 +62,7 @@ a.bangumItem div.jinduFG {
   animation: jdanimi 2s ease-out forwards;
 }
 
-a.bangumItem div.jinduText {
+a.bangumi-item div.progress-text {
   width: 100%;
   height: auto;
   text-align: center;
@@ -75,7 +75,7 @@ a.bangumItem div.jinduText {
 }
 
 @media screen and (max-width:1000px) {
-  a.bangumItem {
+  a.bangumi-item {
     width: 95%;
   }
 }
