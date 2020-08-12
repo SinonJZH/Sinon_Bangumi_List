@@ -27,7 +27,12 @@
             $name = sanitize_text_field($_POST['original_name']);
             $name_cn = sanitize_text_field($_POST['translated_name']);
             $date = sanitize_text_field($_POST['air_date']);
-            $count = (int)sanitize_text_field($_POST['episode_count']);
+            if (is_numeric($_POST['episode_count'])) {
+                $count = (int)sanitize_text_field($_POST['episode_count']);
+            } else {
+                show_dismissible_notice(__("Invalid episode count", "sinon-bangumi-list"), "error");
+                return;
+            }
             $title = sanitize_text_field($_POST['summary']);
             $result = bangumi::add_or_update_bangumi($id, $url, $img, $name, $name_cn, $date, $count, $title);
             if ($result==true) {
