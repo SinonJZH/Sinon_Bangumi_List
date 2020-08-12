@@ -66,6 +66,10 @@ foreach ($all_bangumi as $a) {
 ?>
 
 <?php
+/**
+* Render bangumi item in comment mode
+*
+*/
 function render_bangumi_item_comment($bangumi)
 {
     ?>
@@ -106,7 +110,10 @@ function render_bangumi_item_comment($bangumi)
     </div>
     <?php
 }
-
+/**
+* Render bangumi item in list mode
+*
+*/
 function render_bangumi_item_list($bangumi)
 {
     ?>

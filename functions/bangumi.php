@@ -1,7 +1,17 @@
 <?php
-
+/**
+* Access Wordpress database to save bangumi
+*
+*/
 class bangumi
 {
+    /**
+    * Delete bangumi by id
+    *
+    * @access public
+    * @param mixed $id Id of bangumi in bangumi.tv
+    * @return boolean Whether bangumi has been deleted or not.
+    */
     public static function delete_bangumi_from_id($id)
     {
         $all_bangumi = get_option("sinonbangumilist_savedbangumi");
@@ -13,6 +23,14 @@ class bangumi
         }
         return update_option("sinonbangumilist_savedbangumi", $all_bangumi);
     }
+
+    /**
+    * Get bangumi by id
+    *
+    * @access public
+    * @param mixed $id Id of bangumi in bangumi.tv
+    * @return array bangumi
+    */
     public static function get_bangumi_by_id($id)
     {
         $bangumi=[];
@@ -23,6 +41,16 @@ class bangumi
         return $bangumi;
     }
 
+    /**
+    * Update bangumi status by id
+    *
+    * @access public
+    * @param mixed $id Id of bangumi in bangumi.tv
+    * @param mixed $status Status of bangumi, can be 0(for ready), 1(for watching), 2(for finish)
+    * @param mixed $times How many times have you finished
+    * @param mixed $progress Progress of you watching
+    * @return boolean Whether bangumi has been updated or not.
+    */
     public static function update_bangumi_status($id, $status, $times, $progress)
     {
         $all_bangumi = get_option("sinonbangumilist_savedbangumi");
@@ -45,6 +73,20 @@ class bangumi
         return update_option("sinonbangumilist_savedbangumi", $all_bangumi);
     }
 
+    /**
+    * Update bangumi by id
+    *
+    * @access public
+    * @param mixed $id Id of bangumi in bangumi.tv
+    * @param mixed $url Url of bangumi in bangumi.tv
+    * @param mixed $img Image url of bangumi in bangumi.tv
+    * @param mixed $name Original name
+    * @param mixed $name_cn Translated name
+    * @param mixed $date Air date
+    * @param mixed $count Eispode count
+    * @param mixed $title Summary or comment
+    * @return boolean Whether bangumi has been updated or not.
+    */
     public static function add_or_update_bangumi($id, $url, $img, $name, $name_cn, $date, $count, $title)
     {
         $all_bangumi = get_option("sinonbangumilist_savedbangumi");

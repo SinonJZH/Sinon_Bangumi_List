@@ -1,4 +1,8 @@
 <?php
+/**
+* Provided api for bangumi.tv
+*
+*/
 class bangumi_tv_api
 {
     /**
