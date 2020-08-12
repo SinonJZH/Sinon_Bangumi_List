@@ -1,6 +1,10 @@
 # Sinon_Bangumi_List
-Sinon的追番列表——Wordpress插件
+Sinon的追番列表——Wordpress插件(Fork版)
 ## 更新日志
+#### V1.2.6 by SamLangTen
+* 重构所有代码
+* 后台管理页面标准化
+* 添加了一个评论模式
 #### V1.2.5
 * 取消待追番状态番剧的周目显示
 #### V1.2.4

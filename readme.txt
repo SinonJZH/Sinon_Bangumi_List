@@ -55,6 +55,10 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Changelog ==
 
+= V1.2.6 by SamLangTen =
+* 重构所有代码
+* 后台管理页面标准化
+* 添加了一个评论模式
 = 1.2.5 =
 * 取消待追番状态番剧的周目显示
 = 1.2.4 =
