@@ -52,6 +52,34 @@ foreach ($all_bangumi as $a) {
 function render_bangumi_item($bangumi)
 {
     ?>
+    <div class="bangumi-item">
+        <div class="bangumi-summary">
+            <p>进入21世纪已有近20年，在人们已忘记了妖怪存在的现代。 科学无法解明的现象频发，流言飞语散布各处，大人们只能疲于奔命。 希望想办法解决这一情况而写信给妖怪信箱的13岁少女·真奈的面前， 随着咔哒咔哒的木屐响声，鬼太郎来到了…。</p>
+        </div>
+        <div class="bangumi-info">
+            <img class="bangumi-img" src="https://lain.bgm.tv/pic/cover/l/30/71/234531_u3ujU.jpg">
+            <div class="bangumi-detail">
+                <strong>鬼太郎 第六季</strong>
+                <span>ゲゲゲの鬼太郎</span>
+                <br/>
+                <span>首播日期：2018年4月1日</span>
+                <div class="progress-background">
+                    <div class="progress-text">
+                        进度
+                    </div>
+                    <div class="progress-foreground" style="width:50%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <?php
+}
+
+function render_bangumi_item2($bangumi)
+{
+    ?>
     
     <a href="<?php echo(esc_url($bangumi['url'])); ?>" target="_blank" class="bangumi-item" title="<?php echo(esc_attr($bangumi['title'])); ?>">
         <img src="<?php echo(esc_url($bangumi['img'])); ?>"><div class="textbox">

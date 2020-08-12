@@ -1,3 +1,77 @@
+div.bangumi-item{
+  line-height: 20px;
+  white-space: nowrap;
+  box-shadow: 0px 0px 5px black;
+  margin: 1.5%;
+  float: left;
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+}
+
+div.bangumi-info{
+  border-top: 1px solid gray;
+  height: 88px;
+  display: flex;
+}
+
+div.bangumi-detail{
+  width: 100%;
+  padding: 10px;
+}
+
+div.bangumi-detail strong{
+  font-size: +20px;
+}
+
+div.bangumi-summary{
+  white-space: normal;
+}
+
+div.bangumi-summary p{
+  margin: 10px;
+}
+
+img.bangumi-img{
+  height: 88px;
+  padding-right: 10px;
+}
+
+div.progress-background {
+  height: 18px;
+  width: 100%;
+  background-color: gray;
+  border-radius: 4px;
+  margin-top:5px;
+}
+
+div.progress-foreground {
+  height: 18px;
+  background-color: #3aee85;
+  border-radius: 4px;
+  bottom: 0px;
+  z-index: 1;
+  -webkit-animation: jdanimi 2s ease-out forwards;
+  -moz-animation: jdanimi 2s ease-out forwards;
+  -o-animation: jdanimi 2s ease-out forwards;
+  -ms-animation: jdanimi 2s ease-out forwards;
+  animation: jdanimi 2s ease-out forwards;
+}
+
+div.progress-text {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  color: rgb(49, 30, 214);
+  line-height: 15px;
+  font-size: 15px;
+  float: left;
+  margin-top:1px;
+  z-index: 2;
+}
+
+
 a.bangumi-item {
   line-height: 20px;
   white-space: nowrap;
