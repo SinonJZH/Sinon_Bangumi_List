@@ -25,7 +25,7 @@ else :
     <table style="line-height: 50px;text-align: center;">
         <tr>
             <td style="width:300px"><?php _e('番剧名称') ?></td>
-            <td style="width:450px"><?php _e('番剧状态') ?></td>
+            <td style="width:500px"><?php _e('番剧状态') ?></td>
             <td><?php _e('编辑') ?></td>
             <td><?php _e('删除') ?></td>
         </tr>

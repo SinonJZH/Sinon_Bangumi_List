@@ -1,6 +1,8 @@
 # Sinon_Bangumi_List
 Sinon的追番列表——Wordpress插件
 ## 更新日志
+#### V2.0.1
+* Bug Fix
 ### V2.0
 * 代码重构
 #### V1.2.5

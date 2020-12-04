@@ -1,4 +1,4 @@
-<?
+<?php
 
 namespace Sinon_Bangumi_List;
 
