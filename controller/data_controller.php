@@ -168,23 +168,6 @@ class data_controller
         return $flag;
     }
 
-    //删除指定番剧
-    public static function del_certain_bangunmi()
-    {
-        $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
-        $id = (int) $_POST['bangumi_id'];
-        unset($saved_bangumi[$id]);
-        uasort($saved_bangumi, 'self::sort_cmp');
-        $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
-        if ($flag == true) {
-            helpers::show_message('番剧删除成功！', 'success');
-        } else {
-            helpers::show_message('番剧删除失败！', 'error');
-        }
-        update_option('sinonbangumilist_index_status', false);
-        return $flag;
-    }
-
     //ajax删除单个番剧处理函数
     public static function ajax_delete_single()
     {

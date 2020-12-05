@@ -62,9 +62,6 @@ class route
         } elseif ($_POST['action'] == 3 && wp_verify_nonce($_POST['nonce'], "Sinon_Bangumi_Action_Add_Confirm")) { //添加番剧
             data_controller::add_bangumi_item();
             views_controller::bangumi_option_page();
-        } elseif ($_POST['action'] == 4 && wp_verify_nonce($_POST['nonce'], "Sinon_Bangumi_Action_Delete_Single_Confirm")) { //删除指定番剧
-            data_controller::del_certain_bangunmi();
-            views_controller::bangumi_option_page();
         } elseif ($_POST['action'] == 5 && wp_verify_nonce($_POST['nonce'], "Sinon_Bangumi_Action_Delete_ALL_Confirm")) { //删除全部番剧
             data_controller::del_all_bangunmi();
             views_controller::bangumi_option_page();

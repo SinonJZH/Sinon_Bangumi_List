@@ -13,10 +13,10 @@ function bangumi_del_confirm(id) {
             data,
             function (data) {
                 if (data.success) {
-                    alert(`番剧删除成功！\n信息：${data.data.message}`);
+                    alert('番剧删除成功');
                     jQuery(`#${data.data.request}`).fadeOut()
                 } else {
-                    alert(`番剧删除失败！\n信息：${data.data.message}`);
+                    alert(`番剧删除失败！\n服务器信息：${data.data.message}`);
                 }
             }
         );
