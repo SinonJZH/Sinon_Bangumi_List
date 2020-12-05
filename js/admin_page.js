@@ -1,0 +1,30 @@
+function bangumi_del_confirm(id) {
+    var banguminame = jQuery(`#${id}-name`).html();
+    var ajax_url = Sinon_object.ajax_url;
+    var data = {
+        _ajax_nonce: Sinon_object.del_single_nonce,
+        action: 'Sinon_Bangumi_Ajax_Delete_Single',
+        bangumi_name: banguminame,
+        bangumi_id: id
+    };
+    if (confirm(`你确定要删除番剧《${banguminame}》吗？`)) {
+        jQuery.post(
+            ajax_url,
+            data,
+            function (data) {
+                if (data.success) {
+                    alert(`番剧删除成功！\n信息：${data.data.message}`);
+                    jQuery(`#${data.data.request}`).fadeOut()
+                } else {
+                    alert(`番剧删除失败！\n信息：${data.data.message}`);
+                }
+            }
+        );
+    }
+}
+
+function img_change_preview() {
+    var bangumi_img = jQuery('#bangumi_img');
+    var img_url = jQuery('#img_url').val();
+    bangumi_img.attr('src', img_url);
+}

@@ -9,8 +9,9 @@
         <input type="hidden" name="action" value="9">
         <?php wp_nonce_field('Sinon_Bangumi_Action_Edit', 'nonce'); ?>
     <?php endif ?>
-    <img src="<?php echo ($bangumi_info['img']); ?>" style="max-height:600px;max-width:30%;float:right;margin-right:10%;"></img><br>
-    <?php _e('图片链接：') ?><input type="text" name="img" value="<?php echo ($bangumi_info['img']) ?>" style="width:50%"><br>
+    <img src="<?php echo ($bangumi_info['img']); ?>" style="max-height:600px;max-width:30%;float:right;margin-right:10%;" id="bangumi_img"></img><br>
+    <?php _e('图片链接：') ?><input type="text" name="img" value="<?php echo ($bangumi_info['img']) ?>" style="width:50%" id="img_url">
+    <button class="button button-primary" onclick="img_change_preview();" type="button">预览图片</button><br>
     <?php _e('番剧链接：') ?><input type="text" name="url" value="<?php echo ($bangumi_info['url']) ?>" style="width:50%"><br>
     <?php _e('中文名：') ?><input type="text" name="name_cn" value="<?php echo ($bangumi_info['name_cn']) ?>" style="width:50%"><br>
     <?php _e('日文名：') ?><input type="text" name="name" value="<?php echo ($bangumi_info['name']) ?>" style="width:50%"><br>

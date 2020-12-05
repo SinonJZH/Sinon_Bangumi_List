@@ -40,10 +40,4 @@ class views_controller
     {
         include Sinon_BL_PLUGIN_DIR . 'views/del_all_confirm.view.php';
     }
-
-    //删除单个番剧确认页面
-    public static function del_single_confirm_page($bangumi)
-    {
-        include Sinon_BL_PLUGIN_DIR . 'views/del_single_confirm.view.php';
-    }
 }

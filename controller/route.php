@@ -12,14 +12,38 @@ class route
     //插件注册
     public static function load()
     {
-        add_shortcode("bangumi", array(Static::class , 'create_bangumi_list'));
-        add_action('admin_menu', array(Static::class , 'sinon_bangumi_adminpage'));
+        add_shortcode('bangumi', array(Static::class , 'create_bangumi_list'));            //显示追番列表页面
+        add_action('admin_menu', array(Static::class , 'sinon_bangumi_adminpage'));        //添加后台菜单
+        add_action('admin_enqueue_scripts' , array(Static::class , 'admin_page_enqueue')); //加载后台菜单脚本和CSS
+        add_action('wp_ajax_Sinon_Bangumi_Ajax_Delete_Single' , array('Sinon_Bangumi_List\data_controller' , 'ajax_delete_single'));//注册ajax删除单个番剧处理函数
     }
 
      //添加wordpress后台菜单
     public static function sinon_bangumi_adminpage()
     {
         add_management_page('更新追番列表', '更新追番列表', 'edit_posts', 'sinon_bangumi_list', array(Static::class , 'sinon_bangumi_options'));
+    }
+
+    //生成追番列表
+    public static function create_bangumi_list()
+    {
+        $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
+        $index = data_controller::bangumi_index($saved_bangumi);
+        views_controller::bangumi_list($saved_bangumi,$index);
+    }
+
+    //加载后台菜单脚本和CSS
+    public static function admin_page_enqueue( $hook )
+    {
+        if($hook != 'tools_page_sinon_bangumi_list')
+            return;
+        wp_enqueue_script('Sinon_Bangumi_Admin_js', Sinon_BL_PLUGIN_URL . 'js/admin_page.js', array( 'jquery' ));
+        $del_single_nonce = wp_create_nonce( 'Sinon_Bangumi_Ajax_Delete_Single' );
+        $script_object = array(
+            'ajax_url' => admin_url( 'admin-ajax.php' ),
+            'del_single_nonce' => $del_single_nonce,
+        );
+        wp_localize_script( 'Sinon_Bangumi_Admin_js', 'Sinon_object', $script_object );
     }
 
     //后台菜单框架
@@ -53,20 +77,10 @@ class route
         } elseif ($_POST['action'] == 9 && wp_verify_nonce($_POST['nonce'], "Sinon_Bangumi_Action_Edit")) { //编辑番剧信息
             data_controller::edit_process();
             views_controller::bangumi_option_page();
-        } elseif ($_POST['action'] == 10 && wp_verify_nonce($_POST['nonce'], "Sinon_Bangumi_Action_Delete_Single")) { //删除单个番剧确认页面
-            self::del_single_confirm();
-        } else {
+        }else {
             helpers::show_message('抱歉，当前操作无法被验证，请重试！', 'error');
             views_controller::bangumi_option_page();
         }
-    }
-
-    //生成追番列表
-    public static function create_bangumi_list()
-    {
-        $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
-        $index = data_controller::bangumi_index($saved_bangumi);
-        views_controller::bangumi_list($saved_bangumi,$index);
     }
 
     //生成番剧搜索结果菜单
@@ -101,23 +115,5 @@ class route
         $add = data_controller::get_bangumi_item($id);
         views_controller::bangumi_edit_page($add,true);
     }
-
-    //删除单个番剧确认
-    public static function del_single_confirm()
-    {
-        if (preg_match_all('/^[1-9][0-9]*$/', $_POST['bangumi_id']) == 0) {
-            helpers::show_message('错误！非法的番剧id！', 'error');
-            views_controller::bangumi_option_page();
-            return false;
-        }
-        $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
-        $id = (int) sanitize_text_field($_POST['bangumi_id']);
-        if(!key_exists($id , $saved_bangumi)){
-            helpers::show_message('番剧不存在！', 'error');
-            views_controller::bangumi_option_page();
-            return false;
-        }
-        views_controller::del_single_confirm_page($saved_bangumi[$id]);
-        }
 }
 ?>

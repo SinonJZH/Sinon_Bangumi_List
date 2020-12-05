@@ -185,6 +185,35 @@ class data_controller
         return $flag;
     }
 
+    //ajax删除单个番剧处理函数
+    public static function ajax_delete_single()
+    {
+        check_ajax_referer( 'Sinon_Bangumi_Ajax_Delete_Single' );
+        $id = (int) sanitize_text_field($_POST['bangumi_id']);
+        $data = array(
+            'request' => $id
+        );
+        if (preg_match_all('/^[1-9][0-9]*$/', $id) == 0) {
+            $data['message'] = '错误！非法的番剧id！';
+            wp_send_json_error($data);
+        }
+        $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
+        if(!key_exists($id , $saved_bangumi)){
+            $data['message'] = '番剧不存在！';
+            wp_send_json_error($data);
+        }
+        unset($saved_bangumi[$id]);
+        uasort($saved_bangumi, 'self::sort_cmp');
+        $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
+        if ($flag == true) {
+            $data['message'] = '番剧删除成功！';
+            wp_send_json_success($data);
+        } else {
+            $data['message'] = '番剧删除失败！';
+            wp_send_json_error($data);
+        }
+    }
+
     //通过关键词搜索番剧
     //@return: 搜索结果
     public static function search_bangumi()

@@ -1,5 +1,5 @@
-<tr>
-    <td><?php echo (esc_attr($this_bangumi['name_cn'])); ?></td>
+<tr id="<?php echo (esc_attr($this_bangumi['id'])); ?>">
+    <td id="<?php echo (esc_attr($this_bangumi['id'])); ?>-name"><?php echo (esc_attr($this_bangumi['name_cn'])); ?></td>
     <td>
         <form action="" method="POST">
             <input type="hidden" name="action" value="2">
@@ -54,11 +54,6 @@
         </form>
     </td>
     <td>
-        <form action="" method="POST">
-            <input type="hidden" name="action" value="10">
-            <input type="hidden" name="bangumi_id" value="<?php echo (esc_attr($this_bangumi['id'])); ?>">
-            <?php wp_nonce_field('Sinon_Bangumi_Action_Delete_Single', 'nonce'); ?>
-            <input type="submit" value="<?php _e('删除') ?>" class="button button-primary" style="color:red;vertical-align:middle;">
-        </form>
+        <button type="button" class="button button-primary" style="vertical-align:middle;color:red;"onclick="bangumi_del_confirm(<?php echo (esc_attr($this_bangumi['id'])); ?>);"><?php _e('删除') ?></button>
     </td>
 </tr>
