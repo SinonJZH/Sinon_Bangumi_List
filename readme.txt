@@ -58,6 +58,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 = 2.1.0 =
 * 使用ajax删除单个番剧
 * 使用ajax进行进度增加
+* 编辑番剧页面添加图片预览按钮
 = 2.0.1 =
 * Bug Fix
 = 2.0 =
