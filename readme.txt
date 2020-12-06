@@ -57,6 +57,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 = 2.1.0 =
 * 使用ajax删除单个番剧
+* 使用ajax进行进度增加
 = 2.0.1 =
 * Bug Fix
 = 2.0 =
@@ -96,7 +97,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Upgrade Notice ==
 
-= 2.0 =
+= 2.1.0 =
 * **注意，如果修改了css文件，更新时请先备份修改**
 * 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
 

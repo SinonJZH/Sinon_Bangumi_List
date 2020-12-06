@@ -139,9 +139,9 @@ class data_controller
         $add['date'] = sanitize_text_field($_POST['date']);
         $add['count'] = sanitize_text_field($_POST['count']);
         $add['title'] = sanitize_text_field($_POST['title']);
-        $add['status'] = 0;
-        $add['progress'] = 0;
-        $add['times'] = 1;
+        $add['status'] = '0';
+        $add['progress'] = '0';
+        $add['times'] = '1';
         $saved_bangumi[$id] = $add;
         uasort($saved_bangumi, 'self::sort_cmp');
         $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
@@ -192,7 +192,53 @@ class data_controller
             $data['message'] = '番剧删除成功！';
             wp_send_json_success($data);
         } else {
-            $data['message'] = '番剧删除失败！';
+            $data['message'] = '删除操作失败！';
+            wp_send_json_error($data);
+        }
+    }
+
+    //ajax增加看番进度
+    public static function ajax_increase_progress()
+    {
+        check_ajax_referer( 'Sinon_Bangumi_Ajax_Increase_Progress' );
+        $id = (int) sanitize_text_field($_POST['bangumi_id']);
+        $data = array(
+            'request' => $id,
+            'progress' => 0,
+            'status_change' => false,
+            'btn_change' => false
+        );
+        if (preg_match_all('/^[1-9][0-9]*$/', $id) == 0) {
+            $data['message'] = '错误！非法的番剧id！';
+            wp_send_json_error($data);
+        }
+        $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
+        if(!key_exists($id , $saved_bangumi)){
+            $data['message'] = '番剧不存在！';
+            wp_send_json_error($data);
+        }
+        if($saved_bangumi[$id]['status'] != 1){
+            $data['message'] = '番剧不为追番状态！';
+            wp_send_json_error($data);
+        }
+        if ($saved_bangumi[$id]['progress'] < $saved_bangumi[$id]['count'] - 1){   //判断进度+1或更新为已追完
+            $saved_bangumi[$id]['progress'] = (string)intval($saved_bangumi[$id]['progress']) + 1;
+            if ($saved_bangumi[$id]['progress'] >= $saved_bangumi[$id]['count'] - 1){   //判断是否需要更新btn_change标志
+                $data['btn_change'] = true;
+            }
+        } else {
+            $saved_bangumi[$id]['progress'] = $saved_bangumi[$id]['count'];
+            $saved_bangumi[$id]['status'] = '2';
+            $data['status_change'] = true;
+        }
+        $data['progress'] = $saved_bangumi[$id]['progress'];
+        uasort($saved_bangumi, 'self::sort_cmp');
+        $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
+        if ($flag == true) {
+            $data['message'] = '番剧删除成功！';
+            wp_send_json_success($data);
+        } else {
+            $data['message'] = '删除操作失败！';
             wp_send_json_error($data);
         }
     }
@@ -231,7 +277,7 @@ class data_controller
             return null;
     }
 
-    //内部方法，通过id获取番剧信息
+    //通过id获取番剧信息
     //@return: 番剧信息
     public static function get_bangumi_item(int $id)
     {

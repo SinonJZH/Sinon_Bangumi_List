@@ -3,6 +3,7 @@ Sinon的追番列表——Wordpress插件
 ## 更新日志
 #### v2.1.0
 * 使用ajax删除单个番剧
+* 使用ajax进行进度增加
 #### v2.0.1
 * Bug Fix
 ### v2.0

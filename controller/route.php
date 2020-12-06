@@ -16,6 +16,7 @@ class route
         add_action('admin_menu', array(Static::class , 'sinon_bangumi_adminpage'));        //添加后台菜单
         add_action('admin_enqueue_scripts' , array(Static::class , 'admin_page_enqueue')); //加载后台菜单脚本和CSS
         add_action('wp_ajax_Sinon_Bangumi_Ajax_Delete_Single' , array('Sinon_Bangumi_List\data_controller' , 'ajax_delete_single'));//注册ajax删除单个番剧处理函数
+        add_action('wp_ajax_Sinon_Bangumi_Ajax_Increase_Progress' , array('Sinon_Bangumi_List\data_controller' , 'ajax_increase_progress'));//注册ajax增加进度函数
     }
 
      //添加wordpress后台菜单
@@ -39,9 +40,11 @@ class route
             return;
         wp_enqueue_script('Sinon_Bangumi_Admin_js', Sinon_BL_PLUGIN_URL . 'js/admin_page.js', array( 'jquery' ));
         $del_single_nonce = wp_create_nonce( 'Sinon_Bangumi_Ajax_Delete_Single' );
+        $progress_increase_nonce = wp_create_nonce('Sinon_Bangumi_Ajax_Increase_Progress');
         $script_object = array(
             'ajax_url' => admin_url( 'admin-ajax.php' ),
             'del_single_nonce' => $del_single_nonce,
+            'progress_increase_nonce' => $progress_increase_nonce
         );
         wp_localize_script( 'Sinon_Bangumi_Admin_js', 'Sinon_object', $script_object );
     }
