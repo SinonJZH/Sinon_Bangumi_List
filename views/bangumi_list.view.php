@@ -16,7 +16,7 @@ for ($i = 0; $i < $status_2; $i++) :
     $id = $index[2][$i];
     include Sinon_BL_PLUGIN_DIR . 'views/_signle_bangumi.view.php';
 endfor;
-if ($status_1 % 2) :    //排版优化
+if ($status_2% 2) :    //排版优化
 ?>
     <a target="_blank" class="bangumItem" style="box-shadow: none;border:none;"></a>
 <?php endif ?>

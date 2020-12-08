@@ -4,7 +4,7 @@ Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
 Tested up to: 5.5.3
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -55,6 +55,8 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Changelog ==
 
+= 2.1.1 =
+* Bug Fix
 = 2.1.0 =
 * 使用ajax删除单个番剧
 * 使用ajax进行进度增加
@@ -98,7 +100,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Upgrade Notice ==
 
-= 2.1.0 =
+= 2.1.1 =
 * **注意，如果修改了css文件，更新时请先备份修改**
 * 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
 

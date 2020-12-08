@@ -188,6 +188,7 @@ class data_controller
         unset($saved_bangumi[$id]);
         uasort($saved_bangumi, 'self::sort_cmp');
         $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
+        update_option('sinonbangumilist_index_status', false);
         if ($flag == true) {
             $data['message'] = '番剧删除成功！';
             wp_send_json_success($data);
@@ -222,7 +223,7 @@ class data_controller
             wp_send_json_error($data);
         }
         if ($saved_bangumi[$id]['progress'] < $saved_bangumi[$id]['count'] - 1){   //判断进度+1或更新为已追完
-            $saved_bangumi[$id]['progress'] = (string)intval($saved_bangumi[$id]['progress']) + 1;
+            $saved_bangumi[$id]['progress'] = intval($saved_bangumi[$id]['progress']) + 1;
             if ($saved_bangumi[$id]['progress'] >= $saved_bangumi[$id]['count'] - 1){   //判断是否需要更新btn_change标志
                 $data['btn_change'] = true;
             }
@@ -234,6 +235,7 @@ class data_controller
         $data['progress'] = $saved_bangumi[$id]['progress'];
         uasort($saved_bangumi, 'self::sort_cmp');
         $flag = update_option("sinonbangumilist_savedbangumi", $saved_bangumi);
+        update_option('sinonbangumilist_index_status', false);
         if ($flag == true) {
             $data['message'] = '番剧删除成功！';
             wp_send_json_success($data);

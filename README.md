@@ -1,6 +1,8 @@
 # Sinon_Bangumi_List
 Sinon的追番列表——Wordpress插件
 ## 更新日志
+#### v2.1.1
+* Bug Fix
 #### v2.1.0
 * 使用ajax删除单个番剧
 * 使用ajax进行进度增加
