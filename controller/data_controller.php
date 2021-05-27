@@ -171,7 +171,7 @@ class data_controller
     //ajax删除单个番剧处理函数
     public static function ajax_delete_single()
     {
-        check_ajax_referer( 'Sinon_Bangumi_Ajax_Delete_Single' );
+        check_ajax_referer('Sinon_Bangumi_Ajax_Delete_Single');
         $id = (int) sanitize_text_field($_POST['bangumi_id']);
         $data = array(
             'request' => $id
@@ -181,7 +181,7 @@ class data_controller
             wp_send_json_error($data);
         }
         $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
-        if(!key_exists($id , $saved_bangumi)){
+        if (!key_exists($id, $saved_bangumi)) {
             $data['message'] = '番剧不存在！';
             wp_send_json_error($data);
         }
@@ -201,7 +201,7 @@ class data_controller
     //ajax增加看番进度
     public static function ajax_increase_progress()
     {
-        check_ajax_referer( 'Sinon_Bangumi_Ajax_Increase_Progress' );
+        check_ajax_referer('Sinon_Bangumi_Ajax_Increase_Progress');
         $id = (int) sanitize_text_field($_POST['bangumi_id']);
         $data = array(
             'request' => $id,
@@ -214,17 +214,17 @@ class data_controller
             wp_send_json_error($data);
         }
         $saved_bangumi = get_option("sinonbangumilist_savedbangumi");
-        if(!key_exists($id , $saved_bangumi)){
+        if (!key_exists($id, $saved_bangumi)) {
             $data['message'] = '番剧不存在！';
             wp_send_json_error($data);
         }
-        if($saved_bangumi[$id]['status'] != 1){
+        if ($saved_bangumi[$id]['status'] != 1) {
             $data['message'] = '番剧不为追番状态！';
             wp_send_json_error($data);
         }
-        if ($saved_bangumi[$id]['progress'] < $saved_bangumi[$id]['count'] - 1){   //判断进度+1或更新为已追完
+        if ($saved_bangumi[$id]['progress'] < $saved_bangumi[$id]['count'] - 1) {   //判断进度+1或更新为已追完
             $saved_bangumi[$id]['progress'] = intval($saved_bangumi[$id]['progress']) + 1;
-            if ($saved_bangumi[$id]['progress'] >= $saved_bangumi[$id]['count'] - 1){   //判断是否需要更新btn_change标志
+            if ($saved_bangumi[$id]['progress'] >= $saved_bangumi[$id]['count'] - 1) {   //判断是否需要更新btn_change标志
                 $data['btn_change'] = true;
             }
         } else {
@@ -312,8 +312,16 @@ class data_controller
     //番剧排序比较函数
     private static function sort_cmp($a, $b)
     {
-        if ($a['status'] == 1 && $b['status'] == 1) {
-            return $a['progress'] < $b['progress'];
+        if ($a['status'] == $b['status']) {
+            if ((array_key_exists('times', $a) && $a['times'] > 1) || (array_key_exists('times', $b) && $b['times'] > 1)) {
+                $a_times = array_key_exists('times', $a) ? $a['times'] : 1;
+                $b_times = array_key_exists('times', $b) ? $b['times'] : 1;
+                if ($a_times != $b_times)
+                    return $a_times < $b_times;
+            }
+            if ($a['status'] == 1) {
+                return $a['progress'] < $b['progress'];
+            }
         }
         if ($a['status'] == 1) $c = 1;
         elseif ($a['status'] == 0) $c = 2;
