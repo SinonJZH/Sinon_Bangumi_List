@@ -1,5 +1,9 @@
 <tr id="<?php echo (esc_attr($this_bangumi['id'])); ?>">
-    <td id="<?php echo (esc_attr($this_bangumi['id'])); ?>-name"><?php echo (esc_attr($this_bangumi['name_cn'])); ?></td>
+    <td>
+        <a href="<?php echo (esc_url($this_bangumi['url'])); ?>" id="<?php echo (esc_attr($this_bangumi['id'])); ?>-name" target="_blank">
+            <?php echo (esc_attr($this_bangumi['name_cn'])); ?>
+        </a>
+    </td>
     <td>
         <form action="" method="POST">
             <input type="hidden" name="action" value="2">

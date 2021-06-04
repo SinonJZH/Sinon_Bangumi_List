@@ -4,7 +4,7 @@ Donate link: https://sinon.top/donate/
 Tags: bangumi_list
 Requires at least: 4.6
 Tested up to: 5.7.2
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 Requires PHP: 5.2.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -55,6 +55,9 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Changelog ==
 
+= 2.2.1 =
+* 在设置页面加入链接，可以直接进入番剧页面
+* 样式结构优化
 = 2.2.0 =
 * 更新了番剧排序比较逻辑，现在会优先根据番剧周目数进行排序
 * 为多周目番剧设置了新的进度条
@@ -103,7 +106,7 @@ Also see the copyright notice for bgm.tv: https://bgm.tv/about/copyright.
 
 == Upgrade Notice ==
 
-= 2.2.0 =
+= 2.2.1 =
 * **注意，如果修改了css文件，更新时请先备份修改**
 * 本次更新更新了css文件（新增了2个样式），如果css文件已修改请对照新文件修改原来的css文件。
 * 停用并删除旧版本插件，下载新版本插件，使用原来的方式安装即可，用户数据不会被删除。
